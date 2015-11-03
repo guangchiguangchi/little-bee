@@ -4,6 +4,7 @@ version '1.0-SNAPSHOT'
 apply plugin: 'java'
 apply plugin: 'war'
 
+sourceCompatibility = 1.5
 
 repositories {
     maven { url 'http://maven.oschina.net/content/groups/public/' }
@@ -14,4 +15,7 @@ dependencies {
     compile 'c3p0:c3p0:0.9.1.2'
     compile 'com.jfinal:jfinal:2.0'
     compile 'org.beetl:beetl-core:2.2.3'
+    compile 'com.alibaba:fastjson:1.2.6'
+    compile 'mysql:mysql-connector-java:5.1.34'
+
 }
