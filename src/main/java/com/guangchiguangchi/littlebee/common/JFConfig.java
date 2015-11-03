@@ -3,6 +3,7 @@ package com.guangchiguangchi.littlebee.common;
 import com.guangchiguangchi.littlebee.controllers.*;
 import com.jfinal.config.*;
 import com.jfinal.render.ViewType;
+import org.beetl.ext.jfinal.BeetlRenderFactory;
 
 /**
  * Created by jiweibo on 15/11/02.
@@ -11,7 +12,9 @@ public class JFConfig extends JFinalConfig{
     @Override
     public void configConstant(Constants me) {
         me.setDevMode(true);
-        me.setViewType(ViewType.JSP);
+        me.setMainRenderFactory(new BeetlRenderFactory());
+
+
     }
 
     @Override

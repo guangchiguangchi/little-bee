@@ -32,5 +32,6 @@ public class TasksController  extends Controller {
      */
     public void list(){
 
+        render("task.html");
     }
 }
