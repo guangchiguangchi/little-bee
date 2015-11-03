@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>奥维任务系统</title>
+    <style>
+        th,td{
+            border:1px black solid;
+        }
+    </style>
 </head>
 <body>
 <div>
@@ -24,17 +29,23 @@
         </tr>
     </thead>
     <tbody>
+    <%
+        for(mytask in assigneetasks!){
+    %>
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>${mytask.id}</td>
+            <td>${mytask.projectname}</td>
+            <td>${mytask.title}</td>
+            <td>${mytask.content!}</td>
+            <td>${mytask.spendtime}h</td>
+            <td>${mytask.username}</td>
             <td>
                 <button>状态</button>
             </td>
         </tr>
+    <%
+        }
+    %>
     </tbody>
 </table>
 </body>
@@ -52,17 +63,23 @@
         </tr>
     </thead>
     <tbody>
+    <%
+        for(mytask2 in creatortasks!){
+    %>
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>${mytask2.id}</td>
+            <td>${mytask2.projectname}</td>
+            <td>${mytask2.title}</td>
+            <td>${mytask2.content!}</td>
+            <td>${mytask2.spendtime}h</td>
+            <td>${mytask2.username}</td>
             <td>
                 <button>状态</button>
             </td>
         </tr>
+    <%
+    }
+    %>
     </tbody>
 </table>
 </html>

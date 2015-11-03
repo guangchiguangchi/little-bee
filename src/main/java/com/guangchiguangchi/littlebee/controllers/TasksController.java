@@ -37,6 +37,14 @@ public class TasksController  extends Controller {
      * 列表
      */
     public void list(){
+        String cid = getPara("userid");
+        int listSize ;
+
+        List<TasksModel> creatorList = TasksModel.me.getCreatorTaskList(cid);
+        List<TasksModel> assigneeList = TasksModel.me.getAssigneeTaskList(cid);
+
+        setAttr("creatortasks",creatorList);
+        setAttr("assigneetasks",assigneeList);
 
         render("task.html");
     }
@@ -46,7 +54,7 @@ public class TasksController  extends Controller {
      * 参数: id  用户id
      */
     public void getTaskList(){
-        String cid = getPara("id");
+        String cid = getPara("userid");
         int listSize ;
 
         List<TasksModel> creatorList = TasksModel.me.getCreatorTaskList(cid);
