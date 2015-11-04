@@ -38,6 +38,39 @@ public class UserController extends Controller{
 
     }
 
+    public void weblogin(){
+        String username=getPara("username");
+        String password=getPara("password");
+
+        String msg="";
+        Map<String,Object> data=new HashMap<>();
+        boolean success=false;
+        if("".equals(username)||username==null||"".equals(password)||password==null){
+            msg="用户名或者密码不能为空！";
+        }
+        else{
+            String sql="select m.id,m.username,m.password  from bee_users m where m.username='"+username+"' and m.password='"+password+"' ";
+            UserModel manager= UserModel.me.findFirst(sql);
+            if(manager!=null){
+                int t=manager.get("id");
+                data.put("id",String.valueOf(t));
+                success=true;
+            }
+            else
+            {
+                msg="用户名或者密码错误！请重新输入！";
+            }
+        }
+        if(success){
+            setAttr("islogin",1);
+            setSessionAttr("user",data);
+            redirect("/tasks/list");
+        }else{
+            setAttr("islogin",0);
+            setAttr("loginmsg",msg);
+            render("/tasks/task.html");
+        }
+    }
     /**
      * 登录接口
      * 参数: phonenumber 客户手机号

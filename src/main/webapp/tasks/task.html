@@ -11,8 +11,34 @@
 </head>
 <body>
 <div>
-    <form>
-        用户名:<input type="text">密码:<input type="password"><input type="submit" value="登陆">
+    <form action="/users/weblogin" method="post">
+        用户名:<input type="text" name="username">密码:<input type="password" name="password"><input type="submit" value="登陆">
+    </form>
+</div>
+<div>
+    <form action="/tasks/add" method="post">
+        <div>
+        产品:
+        <select name="project">
+            <%
+            for(project in projectlist!){
+            %>
+            <option value="${project.id}">${project.projectname}</option>
+            <%
+            }
+            %>
+        </select>
+        </div>
+        <div>
+        指派人:
+        <select name="assignee">
+            <option value="1">人</option>
+        </select>
+        </div>
+       <div> 标题(不可空):<input type="text" name="title"></div>
+        <div>内容:<textarea name="content"></textarea></div>
+        <div>工时(自然数):<input name="spendtime" type="text">h</div>
+        <div><input type="submit" value="添加"></div>
     </form>
 </div>
 <h1>我的任务</h1>
@@ -82,4 +108,14 @@
     %>
     </tbody>
 </table>
+<script>
+    var islogin="${islogin}";
+    if(islogin==0){
+        alert("${loginmsg!}");
+    }
+    var rtnMsg="${rtnMsg!}";
+    if(rtnMsg.trim().length>0){
+        alert(rtnMsg);
+    }
+</script>
 </html>
