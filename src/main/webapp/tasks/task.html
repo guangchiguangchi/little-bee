@@ -66,7 +66,11 @@
             <td>${mytask.spendtime}h</td>
             <td>${mytask.username}</td>
             <td>
-                <button>状态</button>
+                <form action="/tasks/changeTaskStatus" method="post">
+                    <input type="hidden" name="taskid" value="${mytask.id}">
+                    <input type="submit" name="status" value="开始">
+                    <input type="submit" name="status" value="完成">
+                </form>
             </td>
         </tr>
     <%
@@ -74,7 +78,6 @@
     %>
     </tbody>
 </table>
-</body>
 <h1>我的指派</h1>
 <table>
     <thead>
@@ -84,7 +87,7 @@
             <th>标题</th>
             <th>内容</th>
             <th>工时</th>
-            <th>汇报人</th>
+            <th>指派人</th>
             <th></th>
         </tr>
     </thead>
@@ -100,7 +103,24 @@
             <td>${mytask2.spendtime}h</td>
             <td>${mytask2.username}</td>
             <td>
-                <button>状态</button>
+                <span>
+                <%
+                select{
+                    case mytask2.status == 0:
+                        print("未开始");
+                    case mytask2.status == 1:
+                        print("已开始");
+                    case mytask2.status == 2:
+                        print("已完成");
+                    case mytask2.status == 3:
+                        print("已撤销");
+                }
+                %>
+                </span>
+                <form action="/tasks/changeTaskStatus" method="post">
+                    <input type="hidden" name="taskid" value="${mytask2.id}">
+                    <input type="submit" name="status" value="撤销">
+                </form>
             </td>
         </tr>
     <%
@@ -118,4 +138,8 @@
         alert(rtnMsg);
     }
 </script>
+
+
+
+</body>
 </html>

@@ -72,6 +72,41 @@ public class TasksController  extends Controller {
     }
 
     /**
+     * 修改task状态
+     */
+    public void changeTaskStatus(){
+        Map<String, Object> usermap =null;
+        usermap = getSessionAttr("user");
+        if(usermap==null){
+            setAttr("islogin",0);
+            setAttr("loginmsg","请登陆");
+            render("task.html");
+        }else {
+            String taskid = getPara("taskid");
+            String statusStr = getPara("status");
+
+            TasksModel task = TasksModel.me.findById(taskid);
+            int status = 0;
+            switch (statusStr){
+                case "开始":
+                    status=1;
+                    break;
+                case "完成":
+                    status=2;
+                    break;
+                case "撤销":
+                    status=3;
+                    break;
+            }
+
+            task.set("status",status);
+            task.update();
+
+            redirect("/tasks/list");
+        }
+    }
+
+    /**
      * 删除
      */
     public void delete(){
