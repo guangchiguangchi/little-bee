@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.guangchiguangchi.littlebee.common.Uitls;
 import com.guangchiguangchi.littlebee.models.ProjectModel;
 import com.guangchiguangchi.littlebee.models.TasksModel;
+import com.guangchiguangchi.littlebee.models.UserModel;
 import com.jfinal.core.Controller;
 
 import java.sql.Time;
@@ -28,7 +29,10 @@ public class TasksController  extends Controller {
             render("task.html");
 
         }else {
-
+            if(Integer.parseInt(usermap.get("group").toString())%10!=0){
+                redirect("/tasks/list");
+                return;
+            }
             String rtnMsg = null;
             String projectid = getPara("project");
             String assigneeid = getPara("assignee");
@@ -82,6 +86,10 @@ public class TasksController  extends Controller {
             setAttr("loginmsg","请登陆");
             render("task.html");
         }else {
+            if(Integer.parseInt(usermap.get("group").toString())%10!=0){
+                redirect("/tasks/list");
+                return;
+            }
             String taskid = getPara("taskid");
             String statusStr = getPara("status");
 
@@ -125,8 +133,13 @@ public class TasksController  extends Controller {
             render("task.html");
 
         }else {
+            List<UserModel> grouperList =null;
             //指派人列表
-
+            if(Integer.parseInt(usermap.get("group").toString())<10) {
+                grouperList = UserModel.me.find("select * from bee_users");
+            }else{
+                grouperList = UserModel.me.find("select * from bee_users where bee_users.group between ? and ?", usermap.get("group"), Integer.parseInt(usermap.get("group").toString()) + 9);
+            }
             //产品列表
             List<ProjectModel> projectList = ProjectModel.me.find("select * from bee_projects");
 
@@ -135,9 +148,12 @@ public class TasksController  extends Controller {
             List<TasksModel> creatorList = TasksModel.me.getCreatorTaskList(usermap.get("id").toString());
             List<TasksModel> assigneeList = TasksModel.me.getAssigneeTaskList(usermap.get("id").toString());
 
+            setAttr("groupusers",grouperList);
             setAttr("projectlist",projectList);
             setAttr("creatortasks", creatorList);
             setAttr("assigneetasks", assigneeList);
+
+            setAttr("group",usermap.get("group"));
 
             setAttr("islogin",1);
             setAttr("rtnMsg",getAttr("rtnMsg"));

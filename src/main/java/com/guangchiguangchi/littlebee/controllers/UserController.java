@@ -49,11 +49,12 @@ public class UserController extends Controller{
             msg="用户名或者密码不能为空！";
         }
         else{
-            String sql="select m.id,m.username,m.password  from bee_users m where m.username='"+username+"' and m.password='"+password+"' ";
+            String sql="select m.id,m.username,m.password,m.group  from bee_users m where m.username='"+username+"' and m.password='"+password+"' ";
             UserModel manager= UserModel.me.findFirst(sql);
             if(manager!=null){
                 int t=manager.get("id");
                 data.put("id",String.valueOf(t));
+                data.put("group",manager.get("group"));
                 success=true;
             }
             else
@@ -89,11 +90,12 @@ public class UserController extends Controller{
             msg="用户名或者密码不能为空！";
         }
         else{
-            String sql="select m.id,m.username,m.password  from bee_users m where m.username='"+username+"' and m.password='"+password+"' ";
+            String sql="select m.id,m.username,m.password,m.group  from bee_users m where m.username='"+username+"' and m.password='"+password+"' ";
             UserModel manager= UserModel.me.findFirst(sql);
             if(manager!=null){
                 int t=manager.get("id");
                 data.put("id",String.valueOf(t));
+                data.put("group",manager.get("group"));
                 success=true;
             }
             else

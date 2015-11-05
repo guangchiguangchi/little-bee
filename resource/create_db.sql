@@ -15,7 +15,8 @@ create table bee_tasks(
 create table bee_users(
   id int not null PRIMARY key AUTO_INCREMENT,
   username varchar(20) not null,
-  password varchar(10) not null
+  password varchar(10) not null,
+  group int not null
 );
 
 create table bee_projects(

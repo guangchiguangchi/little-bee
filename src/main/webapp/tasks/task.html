@@ -11,10 +11,13 @@
 </head>
 <body>
 <div>
+
     <form action="/users/weblogin" method="post">
         用户名:<input type="text" name="username">密码:<input type="password" name="password"><input type="submit" value="登陆">
     </form>
 </div>
+
+<%if(group % 10 ==0 || group < 10){%>
 <div>
     <form action="/tasks/add" method="post">
         <div>
@@ -32,7 +35,11 @@
         <div>
         指派人:
         <select name="assignee">
-            <option value="1">人</option>
+            <%
+            for(user in groupusers){
+            %>
+            <option value="${user.id}">${user.username}</option>
+            <%}%>
         </select>
         </div>
        <div> 标题(不可空):<input type="text" name="title"></div>
@@ -41,6 +48,8 @@
         <div><input type="submit" value="添加"></div>
     </form>
 </div>
+<%}%>
+
 <h1>我的任务</h1>
 <table>
     <thead>
@@ -68,8 +77,17 @@
             <td>
                 <form action="/tasks/changeTaskStatus" method="post">
                     <input type="hidden" name="taskid" value="${mytask.id}">
+                    <%
+                    if(mytask.status==0){
+                    %>
                     <input type="submit" name="status" value="开始">
+                    <%
+                    }else if(mytask.status==1){
+                    %>
                     <input type="submit" name="status" value="完成">
+                    <%
+                    }
+                    %>
                 </form>
             </td>
         </tr>
@@ -117,10 +135,16 @@
                 }
                 %>
                 </span>
+                <%
+                if(group %10 ==0){
+                %>
                 <form action="/tasks/changeTaskStatus" method="post">
                     <input type="hidden" name="taskid" value="${mytask2.id}">
                     <input type="submit" name="status" value="撤销">
                 </form>
+                <%
+                }
+                %>
             </td>
         </tr>
     <%

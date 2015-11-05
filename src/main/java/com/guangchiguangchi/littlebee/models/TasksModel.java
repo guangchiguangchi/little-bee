@@ -27,7 +27,7 @@ public class TasksModel extends Model<TasksModel> {
      * @return
      */
     public List<TasksModel> getAssigneeTaskList (String user_id){
-        List<TasksModel> tasklist = me.find("select bee_tasks.*,bee_projects.projectname as projectname,bee_users.username as username  from bee_tasks  join bee_projects on bee_tasks.project_id = bee_projects.id join bee_users on bee_tasks.creator_id=bee_users.id where assignee_id = ?",user_id);
+        List<TasksModel> tasklist = me.find("select bee_tasks.*,bee_projects.projectname as projectname,bee_users.username as username  from bee_tasks  join bee_projects on bee_tasks.project_id = bee_projects.id join bee_users on bee_tasks.creator_id=bee_users.id where status < 2 and assignee_id = ?",user_id);
         return tasklist;
     }
 }
