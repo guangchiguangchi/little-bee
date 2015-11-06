@@ -186,7 +186,29 @@ public class TasksController  extends Controller {
         for(int i = 0;i<listSize;i++){
             assigneeArrJson.add(assigneeList.get(i));
         }
-        objJson.put("assigee",creatorArrJson);
+        objJson.put("assigee",assigneeArrJson);
+
+        renderJson(Uitls.Ajax.success("成功", objJson));
+    }
+
+    /**
+     * 得到用户相关的所有任务
+     * 参数: id  用户id
+     */
+    public void getAssigneeTaskList(){
+        String cid = getPara("userid");
+        int listSize ;
+
+        List<TasksModel> assigneeList = TasksModel.me.getAssigneeTaskList(cid);
+        listSize = assigneeList.size();
+
+        JSONObject objJson = new JSONObject();
+
+        JSONArray assigneeArrJson = new JSONArray();
+        for(int i = 0;i<listSize;i++){
+            assigneeArrJson.add(assigneeList.get(i));
+        }
+        objJson.put("assigee",assigneeArrJson);
 
         renderJson(Uitls.Ajax.success("成功", objJson));
     }
