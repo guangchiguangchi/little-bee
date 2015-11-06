@@ -136,7 +136,7 @@
                 %>
                 </span>
                 <%
-                if(workgroup %10 ==0 && mytask2.status < 2){
+                if(group %10 ==0 && mytask2.status < 2){
                 %>
                 <form action="../tasks/changeTaskStatus" method="post">
                     <input type="hidden" name="taskid" value="${mytask2.id}">
