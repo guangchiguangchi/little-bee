@@ -29,7 +29,8 @@ public class TasksController  extends Controller {
             render("task.html");
 
         }else {
-            if(Integer.parseInt(usermap.get("group").toString())%10!=0){
+
+            if(Integer.parseInt(usermap.get("workgroup").toString())%10!=0){
                 redirect("/tasks/list");
                 return;
             }
@@ -86,7 +87,7 @@ public class TasksController  extends Controller {
             setAttr("loginmsg","请登陆");
             render("task.html");
         }else {
-            if(Integer.parseInt(usermap.get("group").toString())%10!=0){
+            if(Integer.parseInt(usermap.get("workgroup").toString())%10!=0){
                 redirect("/tasks/list");
                 return;
             }
@@ -135,10 +136,10 @@ public class TasksController  extends Controller {
         }else {
             List<UserModel> grouperList =null;
             //指派人列表
-            if(Integer.parseInt(usermap.get("group").toString())<10) {
+            if(Integer.parseInt(usermap.get("workgroup").toString())<10) {
                 grouperList = UserModel.me.find("select * from bee_users");
             }else{
-                grouperList = UserModel.me.find("select * from bee_users where bee_users.group between ? and ?", usermap.get("group"), Integer.parseInt(usermap.get("group").toString()) + 9);
+                grouperList = UserModel.me.find("select * from bee_users where bee_users.workgroup between ? and ?", usermap.get("workgroup"), Integer.parseInt(usermap.get("workgroup").toString()) + 9);
             }
             //产品列表
             List<ProjectModel> projectList = ProjectModel.me.find("select * from bee_projects");
@@ -153,7 +154,7 @@ public class TasksController  extends Controller {
             setAttr("creatortasks", creatorList);
             setAttr("assigneetasks", assigneeList);
 
-            setAttr("group",usermap.get("group"));
+            setAttr("group",usermap.get("workgroup"));
 
             setAttr("islogin",1);
             setAttr("rtnMsg",getAttr("rtnMsg"));
