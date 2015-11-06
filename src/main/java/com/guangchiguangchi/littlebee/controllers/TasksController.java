@@ -9,6 +9,7 @@ import com.guangchiguangchi.littlebee.models.UserModel;
 import com.jfinal.core.Controller;
 
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +63,7 @@ public class TasksController  extends Controller {
             task.set("assignee_id",assigneeid);
             task.set("spendtime",spendTime);
             task.set("status",0);
-            task.set("create_time",LocalTime.now().toString());
+            task.set("create_time",LocalDateTime.now().toString());
 
             task.save();
             redirect("/tasks/list");
@@ -99,12 +100,15 @@ public class TasksController  extends Controller {
             switch (statusStr){
                 case "开始":
                     status=1;
+                    task.set("start_time", LocalDateTime.now().toString());
                     break;
                 case "完成":
                     status=2;
+                    task.set("stop_time", LocalDateTime.now().toString());
                     break;
                 case "撤销":
                     status=3;
+                    task.set("stop_time", LocalDateTime.now().toString());
                     break;
             }
 
