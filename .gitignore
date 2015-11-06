@@ -1,4 +1,5 @@
 *.class
+*.war
 .idea/
 .gradle/
 .metadata/
