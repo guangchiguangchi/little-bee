@@ -12,6 +12,15 @@ create table bee_tasks(
   create_time varchar(20) not null
 );
 
+create table bee_milestones(
+  id int not null PRIMARY  key AUTO_INCREMENT,
+  title varchar(500) not null,
+  content varchar(500) null,
+  project_id int not null,
+  creator_id int not null,
+  status int not null
+);
+
 create table bee_users(
   id int not null PRIMARY key AUTO_INCREMENT,
   username varchar(20) not null,

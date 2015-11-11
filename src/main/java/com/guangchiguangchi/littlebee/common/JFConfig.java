@@ -26,7 +26,7 @@ public class JFConfig extends JFinalConfig{
     @Override
     public void configRoute(Routes me) {
         loadPropertyFile("a_little_config.txt");
-        me.add("/", AdminController.class, "/index");
+        me.add("/", AdminController.class, "/");
         me.add("/users", UserController.class);
         me.add("/projects", ProjectController.class);
         me.add("/tasks", TasksController.class);
