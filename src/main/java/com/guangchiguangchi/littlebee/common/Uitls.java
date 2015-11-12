@@ -1,5 +1,6 @@
 package com.guangchiguangchi.littlebee.common;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +42,12 @@ public class Uitls {
             map.put("data", data);
             return map;
         }
+    }
+
+    public static String currentTime(){
+        Timestamp ts = new Timestamp(System.currentTimeMillis());
+        String datatime = ts.toString();
+        return datatime;
     }
 
 
