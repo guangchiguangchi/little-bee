@@ -11,16 +11,34 @@
             <thead>
             <tr>
                 <th>序号</th>
+                <th>项目/产品</th>
                 <th>任务名称</th>
+                <th>任务描述</th>
                 <th>任务时间</th>
+                <th>创建人</th>
+                <th>指派人</th>
+                <th>创建时间</th>
+                <th>开始时间</th>
+                <th>停止时间</th>
+                <th>状态</th>
+                <th>- -</th>
             </tr>
             </thead>
             <tbody>
             {{each tasklist as task i}}
             <tr>
                 <td>{{i}}</td>
-                <td>{{task.name}}</td>
-                <td>{{task.time}}</td>
+                <td>{{task.projectname}}</td>
+                <td>{{task.title}}</td>
+                <td>{{task.content}}</td>
+                <td>{{task.spendtime}}</td>
+                <td>{{task.creatorname}}</td>
+                <td>{{task.assigneename}}</td>
+                <td>{{task.create_time}}</td>
+                <td>{{task.start_time}}</td>
+                <td>{{task.stop_time}}</td>
+                <td>{{task.status}}</td>
+                <td>{{task.creatorid}} - {{task.assigneeid}}</td>
             </tr>
             {{/each}}
             </tbody>
