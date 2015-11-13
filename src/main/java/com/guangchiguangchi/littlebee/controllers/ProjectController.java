@@ -9,14 +9,20 @@ import com.jfinal.core.Controller;
 import java.util.List;
 
 /**
+ * 项目控制类，用于控制项目的增删改查
  * Created by zhangchen on 15-11-2.
+ *
  */
 public class ProjectController extends Controller {
     /**
-     * 新增
-     * 项目名称：projectname
-     * 项目描述：content
-     * 项目状态：status
+     * 新增项目
+     *
+     * 接口： /projects/add
+     *
+     * 参数：
+     *       projectname   项目名称
+     *       content       项目内容
+     * 返回： json
      */
     public void add() {
         String projectname = getPara("projectname");
@@ -29,6 +35,7 @@ public class ProjectController extends Controller {
         ProjectModel project = new ProjectModel();
         project.set("projectname", projectname);
         project.set("content", content);
+        project.set("create_time",Uitls.currentTime());
         project.set("status", 0);
 
         boolean flag = project.save();
@@ -41,10 +48,15 @@ public class ProjectController extends Controller {
     }
 
     /**
-     * 修改
-     * 项目id： projectid
-     * 项目名称： projectname
-     * 项目描述：content
+     * 修改项目
+     *
+     * 接口:  /projects/update
+     *
+     * 参数：
+     *      projectid     项目id
+     *      projectname   项目名称
+     *      content       项目内容
+     * 返回： json
      */
     public void update() {
         String projectid = getPara("projectid");
@@ -71,28 +83,33 @@ public class ProjectController extends Controller {
     }
 
     /**
-     * 修改 project 状态
+     * 修改项目的状态
      *
-     * 项目id：projectid
-     * 项目状态：status
+     * 接口:  /projects/changeProjectStatus
+     *
+     * 参数：
+     *      projectid     项目id
+     *      status        项目状态
+     * 返回： json
      */
     public void changeProjectStatus() {
         String projectid = getPara("projectid");
         String statusStr = getPara("status");
+        int status=Integer.parseInt(statusStr)+1;
         ProjectModel project = ProjectModel.me.findById(projectid);
 
-        int status = 0;
-        switch (statusStr) {
-            case "开始":
-                status = 1;
-                break;
-            case "完成":
-                status = 2;
-                break;
-            case "撤销":
-                status = 3;
-                break;
-        }
+//        int status = 0;
+//        switch (statusStr) {
+//            case "开始":
+//                status = 1;
+//                break;
+//            case "完成":
+//                status = 2;
+//                break;
+//            case "撤销":
+//                status = 3;
+//                break;
+//        }
         project.set("status", status);
         boolean flag = project.update();
         if (flag) {
@@ -104,9 +121,14 @@ public class ProjectController extends Controller {
     }
 
     /**
-     * 删除
+     * 删除项目
      *
-     * 项目id： projectid
+     * 接口:  /projects/delete
+     *
+     * 参数：
+     *        projectid    项目的id
+     *
+     * 返回： json
      */
     public void delete() {
         String projectid = getPara("projectid");
@@ -123,9 +145,11 @@ public class ProjectController extends Controller {
     }
 
     /**
-     * 查询得到所有project
+     * 查询得到所有项目列表
      *
-     * 列表
+     * 接口:  /projects/list
+     *
+     * 返回： json
      */
     public void list() {
         List<ProjectModel> projectList = null;
@@ -137,8 +161,7 @@ public class ProjectController extends Controller {
         for (int i = 0; i < listSize; i++) {
             projectArrJson.add(projectList.get(i));
         }
-        objJson.put("project", projectArrJson);
+        objJson.put("projects", projectArrJson);
         renderJson(Uitls.Ajax.success("成功", objJson));
-
     }
 }
