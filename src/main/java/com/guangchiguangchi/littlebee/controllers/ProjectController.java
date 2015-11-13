@@ -35,6 +35,7 @@ public class ProjectController extends Controller {
         ProjectModel project = new ProjectModel();
         project.set("projectname", projectname);
         project.set("content", content);
+        project.set("create_time",Uitls.currentTime());
         project.set("status", 0);
 
         boolean flag = project.save();
@@ -94,20 +95,21 @@ public class ProjectController extends Controller {
     public void changeProjectStatus() {
         String projectid = getPara("projectid");
         String statusStr = getPara("status");
+        int status=Integer.parseInt(statusStr)+1;
         ProjectModel project = ProjectModel.me.findById(projectid);
 
-        int status = 0;
-        switch (statusStr) {
-            case "开始":
-                status = 1;
-                break;
-            case "完成":
-                status = 2;
-                break;
-            case "撤销":
-                status = 3;
-                break;
-        }
+//        int status = 0;
+//        switch (statusStr) {
+//            case "开始":
+//                status = 1;
+//                break;
+//            case "完成":
+//                status = 2;
+//                break;
+//            case "撤销":
+//                status = 3;
+//                break;
+//        }
         project.set("status", status);
         boolean flag = project.update();
         if (flag) {
@@ -159,7 +161,7 @@ public class ProjectController extends Controller {
         for (int i = 0; i < listSize; i++) {
             projectArrJson.add(projectList.get(i));
         }
-        objJson.put("project", projectArrJson);
+        objJson.put("projects", projectArrJson);
         renderJson(Uitls.Ajax.success("成功", objJson));
     }
 }
