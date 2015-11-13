@@ -124,7 +124,7 @@ public class ProjectController extends Controller {
      * 接口:  /projects/delete
      *
      * 参数：
-     *        projectid    要删除的项目的id
+     *        projectid    项目的id
      *
      * 返回： json
      */
