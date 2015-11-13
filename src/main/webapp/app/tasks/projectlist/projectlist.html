@@ -19,7 +19,7 @@
             </tr>
             </thead>
             <tbody>
-            {{each data.project as project i}}
+            {{each data.projects as project i}}
             <tr>
                 <td>{{i}}</td>
                 <td>{{project.projectname}}</td>
@@ -27,7 +27,7 @@
                 <td>{{project.create_time}}</td>
                 <td>
                     {{if project.status == '0'}}
-                        项目状态
+                        未开始
                     {{else if project.status == '1'}}
                         已开始
                     {{else if project.status == '2'}}
