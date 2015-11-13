@@ -18,6 +18,7 @@ public class JFConfig extends JFinalConfig{
     @Override
     public void configConstant(Constants me) {
         me.setDevMode(true);
+        me.setEncoding("UTF-8");
         me.setMainRenderFactory(new BeetlRenderFactory());
 
 

@@ -33,8 +33,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="#" onclick="RenderPage('mytask','app-context');">我的任务</a></li>
-                <li><a href="#" onclick="RenderPage('myassign','app-context');">我的指派</a></li>
+                <li><a href="#" onclick="RenderPage('mytask','app-context','tasklist');">我的任务</a></li>
+                <li><a href="#" onclick="RenderPage('myassign','app-context','tasklist');">我的指派</a></li>
             </ul>
             <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">
@@ -47,7 +47,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">我<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">项目列表</a></li>
+                        <li><a href="#" onclick="RenderPage('projectlist','app-context','projectlist');">项目列表</a></li>
                         <li><a href="#">个人信息</a></li>
                         <li><a href="#">签到</a></li>
                         <li><a href="#">LOGIN OUT</a></li>
@@ -70,16 +70,16 @@
 <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="HRFrame/hrframe-2.0.js"></script>
 <script>
-    $f({"path":"app","frontmode":true});
+    $f({"path":"app","frontmode":false});
     console.log($f("test.fnA"));
     console.log("1");
     $(function(){
         console.log("2");
     });
-    function RenderPage(_action,_target){
+    function RenderPage(_action,_target,uri){
 
         var _data={"target":_target,"action":_action};
-        var _fun="tasklist";
+        var _fun=uri;
 
         //           初始参数  页面地址              参数处理             返回值处理           模板合成
         $f("RendPage",_data,"tasks."+_fun+"."+_fun,"tasks."+_fun+".param","tasks."+_fun+".response","tasks."+_fun+".combine");

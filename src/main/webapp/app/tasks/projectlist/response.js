@@ -1,7 +1,7 @@
 /**
  * Created by kingcc on 15-11-10.
  */
-$f("df","tasks.tasklist.response",function(_data,_scope){
+$f("df","tasks.projectlist.response",function(_data,_scope){
     return _data;
     /*return {
         "issuccess": true,

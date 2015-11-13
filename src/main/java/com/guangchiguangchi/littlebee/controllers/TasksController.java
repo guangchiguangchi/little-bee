@@ -144,22 +144,23 @@ public class TasksController extends Controller {
         } else {*/
             String taskid = getPara("taskid");
             String statusStr = getPara("status");
-
+            Integer status = Integer.parseInt(statusStr);
             TasksModel task = TasksModel.me.findById(taskid);
-            int status = 0;
-            switch (statusStr) {
-                case "开始":
+            switch (status) {
+                case 0:
                     status = 1;
                     task.set("start_time", Uitls.currentTime());
                     break;
-                case "完成":
+                case 1:
                     status = 2;
                     task.set("stop_time", Uitls.currentTime());
                     break;
-                case "撤销":
+                case 2:
                     status = 3;
                     task.set("stop_time", Uitls.currentTime());
                     break;
+                default:
+                    renderJson(Uitls.Ajax.failure("状态不存在", ""));
             }
 
             task.set("status", status);
@@ -225,7 +226,7 @@ public class TasksController extends Controller {
      *             userid 用户ID
      * 返回值：json
      */
-    public void getTaskList() {
+    public void getAssigneeTaskList() {
 
         /*String uid = getPara("uid");*/
         String cid = getPara("userid");
@@ -238,8 +239,13 @@ public class TasksController extends Controller {
         }
         int listSize;
 
-        List<TasksModel> creatorList = TasksModel.me.find("select bee_tasks.*,bee_projects.projectname as projectname,bee_users.username as username from bee_tasks join bee_projects on bee_tasks.project_id = bee_projects.id join bee_users on bee_tasks.assignee_id=bee_users.id where creator_id = ?", cid);
-        List<TasksModel> assigneeList = TasksModel.me.find("select bee_tasks.*,bee_projects.projectname as projectname,bee_users.username as username  from bee_tasks  join bee_projects on bee_tasks.project_id = bee_projects.id join bee_users on bee_tasks.creator_id=bee_users.id where assignee_id = ?", cid);
+        List<TasksModel> creatorList = TasksModel.me.find("select bee_tasks.*,bee_projects.projectname as projectname,users.username as creatorname, " +
+                " user.username as assigneename " +
+                " from bee_tasks" +
+                " join bee_projects on bee_tasks.project_id = bee_projects.id " +
+                " join bee_users as users on bee_tasks.creator_id = users.id " +
+                " join bee_users as user on bee_tasks.assignee_id = user.id " +
+                " where creator_id = ?", cid);
 
         JSONObject objJson = new JSONObject();
 
@@ -248,14 +254,7 @@ public class TasksController extends Controller {
         for (int i = 0; i < listSize; i++) {
             creatorArrJson.add(creatorList.get(i));
         }
-        objJson.put("creator", creatorArrJson);
-
-        JSONArray assigneeArrJson = new JSONArray();
-        listSize = assigneeList.size();
-        for (int i = 0; i < listSize; i++) {
-            assigneeArrJson.add(assigneeList.get(i));
-        }
-        objJson.put("assigee", assigneeArrJson);
+        objJson.put("data", creatorArrJson);
 
         renderJson(Uitls.Ajax.success("成功", objJson));
     }
@@ -268,7 +267,7 @@ public class TasksController extends Controller {
      * 返回值：json
      *
      */
-    public void getAssigneeTaskList() {
+    public void getTaskList() {
         /*String uid = getPara("uid");*/
         String cid = getPara("userid");
         /*if (StringUtils.isEmpty(uid)) {
@@ -279,9 +278,13 @@ public class TasksController extends Controller {
             renderJson(Uitls.Ajax.failure("用户ID为空", ""));
         }
         int listSize;
-        List<TasksModel> assigneeList = TasksModel.me.find("select bee_tasks.*,bee_projects.projectname as projectname,bee_users.username as username  " +
-                "from bee_tasks  join bee_projects on bee_tasks.project_id = bee_projects.id join bee_users on bee_tasks.creator_id=bee_users.id " +
-                "where bee_tasks.status < 2 and assignee_id = ?", cid);
+        List<TasksModel> assigneeList = TasksModel.me.find("select bee_tasks.*,bee_projects.projectname as projectname,users.username as creatorname, " +
+                " user.username as assigneename" +
+                " from bee_tasks  " +
+                " join bee_projects on bee_tasks.project_id = bee_projects.id " +
+                " join bee_users as users on bee_tasks.creator_id = users.id " +
+                " join bee_users as user on bee_tasks.assignee_id = user.id " +
+                " where bee_tasks.status < 2 and assignee_id = ?", cid);
         listSize = assigneeList.size();
 
         JSONObject objJson = new JSONObject();
@@ -290,7 +293,7 @@ public class TasksController extends Controller {
         for (int i = 0; i < listSize; i++) {
             assigneeArrJson.add(assigneeList.get(i));
         }
-        objJson.put("assigee", assigneeArrJson);
+        objJson.put("data", assigneeArrJson);
 
         renderJson(Uitls.Ajax.success("成功", objJson));
     }

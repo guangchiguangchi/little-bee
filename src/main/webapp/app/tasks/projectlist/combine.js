@@ -2,7 +2,7 @@
  *
  * Created by kingcc on 15-11-10.
  */
-$f("df","tasks.assigneelist.combine",function(_temp,_resp,_scope){
+$f("df","tasks.projectlist.combine",function(_temp,_resp,_scope){
     var render = template.compile(_temp);
     var html = render(_resp);
 
