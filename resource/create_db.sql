@@ -33,7 +33,7 @@ create table bee_projects(
   projectname varchar(50) not null,
   content varchar(500) null,
   create_time varchar(20) not null,
-  status int
+  status int not null
 );
 
 create table bee_logs(

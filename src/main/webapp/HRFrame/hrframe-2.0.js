@@ -108,7 +108,7 @@
     $f("df","RendPage",function(_data,_pageurl,_paramHandler,_responseHandler,_combineHandler){
         var HRFrameConfig = this.HRFrameConfig;
         $.ajax({
-            url:this.HRFrameConfig.path+"/"+_pageurl.replace(this.HRFrameConfig.splitchar,"/")+this.HRFrameConfig.extension,
+            url:this.HRFrameConfig.path+"/"+_pageurl.replace(this.HRFrameConfig.splitchar,"/")+this.HRFrameConfig.extension+"?time="+new Date().getMilliseconds(),
             data:null,
             datatype:"text",
             success:function(page){
