@@ -3,7 +3,9 @@ package com.guangchiguangchi.littlebee.controllers;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.guangchiguangchi.littlebee.common.Uitls;
+import com.guangchiguangchi.littlebee.models.ProjectModel;
 import com.guangchiguangchi.littlebee.models.TasksModel;
+import com.guangchiguangchi.littlebee.models.UserModel;
 import com.jfinal.core.Controller;
 import org.apache.commons.lang3.StringUtils;
 
@@ -16,6 +18,37 @@ import java.util.List;
  * Created by zhangchen on 15-11-2.
  */
 public class TasksController extends Controller {
+
+    public void projectAndUser(){
+        String userid = getPara("userid");
+        JSONObject objJson = new JSONObject();
+        if(StringUtils.isNotBlank(userid)){
+            TasksModel task = TasksModel.me.findById(userid);
+            objJson.put("task",task);
+        }
+        List<UserModel> userList = null;
+        userList = UserModel.me.find("select id,username from bee_users");
+
+        List<ProjectModel> projectList = null;
+        projectList = ProjectModel.me.find("select * from bee_projects");
+
+        int listSize;
+
+        JSONArray userArr = new JSONArray();
+        listSize = userList.size();
+        for (int i = 0; i < listSize; i++) {
+            userArr.add(userList.get(i));
+        }
+        JSONArray projectArr = new JSONArray();
+        listSize = projectList.size();
+        for (int i = 0; i < listSize; i++) {
+            projectArr.add(projectList.get(i));
+        }
+        objJson.put("user", userArr);
+        objJson.put("project", projectArr);
+
+        renderJson(Uitls.Ajax.success("成功",objJson));
+    }
 
     /**
      * 任务添加
@@ -167,7 +200,7 @@ public class TasksController extends Controller {
             boolean flag = task.update();
 
             if (flag) {
-                renderJson(Uitls.Ajax.success("操作成功", ""));
+                renderJson(Uitls.Ajax.success("操作成功",""));
             } else {
                 renderJson(Uitls.Ajax.failure("操作失败", ""));
             }
