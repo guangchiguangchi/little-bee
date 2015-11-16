@@ -53,13 +53,13 @@ public class ProjectController extends Controller {
      * 接口:  /projects/update
      *
      * 参数：
-     *      projectid     项目id
+     *      id            项目id
      *      projectname   项目名称
      *      content       项目内容
      * 返回： json
      */
     public void update() {
-        String projectid = getPara("projectid");
+        String id = getPara("id");
         String projectname = getPara("projectname");
         String content = getPara("content");
 
@@ -68,7 +68,7 @@ public class ProjectController extends Controller {
             return;
         }
         ProjectModel project = new ProjectModel();
-        project.set("id", projectid);
+        project.set("id", id);
         project.set("projectname", projectname);
         project.set("content", content);
 
@@ -88,15 +88,15 @@ public class ProjectController extends Controller {
      * 接口:  /projects/changeProjectStatus
      *
      * 参数：
-     *      projectid     项目id
+     *      id            项目id
      *      status        项目状态
      * 返回： json
      */
     public void changeProjectStatus() {
-        String projectid = getPara("projectid");
+        String id = getPara("id");
         String statusStr = getPara("status");
         int status=Integer.parseInt(statusStr)+1;
-        ProjectModel project = ProjectModel.me.findById(projectid);
+        ProjectModel project = ProjectModel.me.findById(id);
 
 //        int status = 0;
 //        switch (statusStr) {
@@ -114,6 +114,7 @@ public class ProjectController extends Controller {
         boolean flag = project.update();
         if (flag) {
             renderJson(Uitls.Ajax.success("修改状态成功", ""));
+
         } else {
             renderJson(Uitls.Ajax.failure("修改状态失败", ""));
         }
@@ -126,13 +127,13 @@ public class ProjectController extends Controller {
      * 接口:  /projects/delete
      *
      * 参数：
-     *        projectid    项目的id
+     *        id    项目的id
      *
      * 返回： json
      */
     public void delete() {
-        String projectid = getPara("projectid");
-        ProjectModel project = ProjectModel.me.findById(projectid);
+        String id = getPara("id");
+        ProjectModel project = ProjectModel.me.findById(id);
 
 
         boolean flag = project.delete();
