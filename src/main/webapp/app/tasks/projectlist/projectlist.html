@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-md-12">
-        <button class="btn btn-default" type="submit">Button</button>
-        <button class="btn btn-default" type="submit">Button</button>
-        <button class="btn btn-default" type="submit">Button</button>
+        <button class="btn btn-default" type="submit">button</button>
+        <button class="btn btn-default" type="submit">button</button>
+        <button class="btn btn-default" type="submit">button</button>
     </div>
 </div>
 <div class="row">
@@ -25,18 +25,42 @@
                 <td>{{project.projectname}}</td>
                 <td>{{project.content}}</td>
                 <td>{{project.create_time}}</td>
-                <td>
+
                     {{if project.status == '0'}}
-                        未开始
-                    {{else if project.status == '1'}}
-                        已开始
-                    {{else if project.status == '2'}}
-                        已完成
-                    {{else if project.status == '3'}}
-                        已撤销
-                    {{/if}}
+                <td>
+                    未开始
                 </td>
-                <td>{{project.id}} - {{project.id}}</td>
+                <td>
+                    <button class="btn btn-default" type="submit" onclick="updateStatus(0,'{{project.id}}')">开始</button>
+                    &nbsp
+                    <button class="btn btn-default" type="submit" onclick="updateStatus(2,'{{project.id}}')">撤销</button>
+                </td>
+                    {{else if project.status == '1'}}
+                <td>
+                    已开始
+                </td>
+                <td>
+                    <button class="btn btn-default" type="submit" onclick="updateStatus(1,'{{project.id}}')">完成</button>
+                    &nbsp
+                    <button class="btn btn-default" type="submit" onclick="updateStatus(2,'{{project.id}}')">撤销</button>
+                </td>
+                    {{else if project.status == '2'}}
+                <td>
+                    已完成
+                </td>
+                <td>
+                    &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 已完成
+                </td>
+                    {{else if project.status == '3'}}
+                <td>
+                    已撤销
+                </td>
+                <td>
+                    &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 已撤销
+                </td>
+                    {{/if}}
+
+
             </tr>
             {{/each}}
             </tbody>
