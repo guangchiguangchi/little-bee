@@ -106,6 +106,7 @@
     });
 
     $f("df","RendPage",function(_data,_pageurl,_paramHandler,_responseHandler,_combineHandler){
+
         var HRFrameConfig = this.HRFrameConfig;
         $.ajax({
             url:this.HRFrameConfig.path+"/"+_pageurl.replace(this.HRFrameConfig.splitchar,"/")+this.HRFrameConfig.extension+"?time="+new Date().getMilliseconds(),
@@ -121,22 +122,45 @@
                     var responseData=$f(_responseHandler,{},param);
                     $f(_combineHandler,page,responseData,param);
                 }else{
-                $.ajax({
-                    url:param.url,
-                    data:param.data,
-                    success:function(data2){
-                        if(data2==undefined){
-                            return;
+                    $.ajax({
+                        url:param.url,
+                        data:param.data,
+                        success:function(data2){
+                            if(data2==undefined){
+                                return;
+                            }
+                            var responseData=$f(_responseHandler,data2,param);
+                            $f(_combineHandler,page,responseData,param);
                         }
-                        var responseData=$f(_responseHandler,data2,param);
-                        $f(_combineHandler,page,responseData,param);
-                    }
-                });
+                    });
                 }
 
 
             }
 
         });
+    });
+
+    $f("df","SendData",function(_data,_reqFn,_respFn){
+        var HRFrameConfig = this.HRFrameConfig;
+        var param = $f(_reqFn,_data);
+        if(param==undefined){
+            return;
+        }
+
+        if(HRFrameConfig.frontmode){
+            $f(_respFn,{},param);
+        }else{
+            $.ajax({
+                url:param.url,
+                data:param.data,
+                success:function(data2){
+                    if(data2==undefined){
+                        return;
+                    }
+                    $f(_respFn,data2,param);
+                }
+            });
+        }
     });
 })(window); 
