@@ -105,16 +105,24 @@
         RenderPage('projectchangeProjectStatus','app-context','projectlist',canshu);
         RenderPage('projec tlist','app-context','projectlist');
     }
-</script>
-<script>
     function save(){
-        var project = $("#projectselect  option:selected").text();
-        var username = $("#userselect option:selected").text();
+        var project = $("#projectselect  option:selected").val();
+        var username = $("#userselect option:selected").val();
         var title = $("#title").val();
-        var content = $("content").val();
-        var speedtime = $("speedtime").val();
+        var content = $("#content").val();
+        var speedtime = $("#speedtime").val();
+        var taskId = $("#hiddenid").val();
 
+        if(taskId == null){
+            var canshu = {"project":project,"assignee":username,"title":title,"content":content,"spendtime":speedtime,"userid":1};
+        }else{
+            var canshu = {"project":project,"assignee":username,"title":title,"content":content,"spendtime":speedtime,"userid":1,"taskid":taskId};
+        }
+        RenderPage('add','app-context','tasklist',canshu);
+        $('#myModal').modal('hide');
+        RenderPage('mytask','app-context','tasklist')
     }
 </script>
+
 </body>
 </html>

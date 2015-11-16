@@ -13,7 +13,7 @@ $f("df", "tasks.tasklist.param", function (_param) {
             return {url: "/tasks/projectAndUser", data: {}, target: _param.target};
             break;
         case  "add":
-            return {url: "/tasks/add", data: {}, target: _param.target};
+            return {url: "/tasks/add", data: _param.canshu, target: _param.target};
             break;
     }
 });
