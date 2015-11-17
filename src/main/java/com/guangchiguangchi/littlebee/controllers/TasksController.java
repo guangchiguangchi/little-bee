@@ -19,12 +19,20 @@ import java.util.List;
  */
 public class TasksController extends Controller {
 
-    public void projectAndUser(){
+    public void projectAndUser() {
         String userid = getPara("userid");
         JSONObject objJson = new JSONObject();
-        if(StringUtils.isNotBlank(userid)){
+        if (StringUtils.isNotBlank(userid) && !("null".equals(userid))) {
             TasksModel task = TasksModel.me.findById(userid);
-            objJson.put("task",task);
+            Integer taskId = task.get("id");
+            objJson.put("taskId", taskId);
+            String taskTitle = task.get("title");
+            objJson.put("taskTitle", taskTitle);
+            setAttr("taskTitle", taskTitle);
+            String taskContent = task.get("content");
+            objJson.put("taskContent", taskContent);
+            Integer taskSpendTime = task.get("spendtime");
+            objJson.put("taskSpendTime", taskSpendTime);
         }
         List<UserModel> userList = null;
         userList = UserModel.me.find("select id,username from bee_users");
@@ -44,130 +52,88 @@ public class TasksController extends Controller {
         for (int i = 0; i < listSize; i++) {
             projectArr.add(projectList.get(i));
         }
-        objJson.put("user", userArr);
-        objJson.put("project", projectArr);
+        objJson.put("users", userArr);
+        objJson.put("projects", projectArr);
 
-        renderJson(Uitls.Ajax.success("成功",objJson));
+        renderJson(Uitls.Ajax.success("成功", objJson));
     }
 
     /**
      * 任务添加
-     * 接口：/tasks/add
+     * 接口：/tasks/editTask
      * 参数：      uid
-     *             project  项目ID
-     *             userid   用户ID
-     *             assignee 指派人ID
-     *             title    标题
-     *             content  内容
-     *             spendtime    花费时间
+     * project  项目ID
+     * userid   用户ID
+     * assignee 指派人ID
+     * title    标题
+     * content  内容
+     * spendtime    花费时间
      * 返回值：json
      */
-    public void add() {
+    public void editTask() {
         /*String uid = getPara("uid");*/
         String cid = getPara("userid");
         /*if (StringUtils.isEmpty(uid)) {
             renderJson(Uitls.Ajax.failure("操作失败", ""));
 
         } else {*/
-            String projectid = getPara("project");
-            String assigneeid = getPara("assignee");
-            String title = getPara("title");
-            String content = getPara("content");
-            String spendtimeStr = getPara("spendtime");
+        TasksModel task = null;
+        String taskid = getPara("taskid");
+        if (StringUtils.isNoneBlank(taskid)) {
+            task = TasksModel.me.findById(taskid);
+        } else {
+            task = new TasksModel();
+        }
 
-            if (StringUtils.isNoneBlank(title)) {
-                if(title.trim().isEmpty()){
-                    renderJson(Uitls.Ajax.failure("任务标题不能为空", ""));
-                }
-            }else{
-                renderJson(Uitls.Ajax.failure("任务标题不能为空", ""));
-            }
+        String projectid = getPara("project");
+        String assigneeid = getPara("assignee");
+        String title = getPara("title");
+        String content = getPara("content");
+        String spendtimeStr = getPara("spendtime");
 
-            float spendTime = 0f;
-            try {
-                spendTime = Float.valueOf(spendtimeStr);
-            } catch (Exception ex) {
-                renderJson(Uitls.Ajax.failure("类型转换失败", ""));
-            }
-
-            TasksModel task = new TasksModel();
-            task.set("title", title);
-            task.set("content", content);
-            task.set("project_id", projectid);
-            task.set("creator_id", cid);
-            task.set("assignee_id", assigneeid);
-            task.set("spendtime", spendTime);
-            task.set("status", 0);
-            task.set("create_time", Uitls.currentTime());
-
-            boolean flag = task.save();
-            if (flag) {
-                renderJson(Uitls.Ajax.success("添加任务成功", ""));
-            } else {
-                renderJson(Uitls.Ajax.failure("添加任务失败", ""));
-            }
-        /*}*/
-    }
-
-    /**
-     * 任务修改
-     * 接口：/tasks/update
-     * 参数：      uid
-     *             taskid 任务ID
-     *             project 项目ID
-     *             assignee 指派人ID
-     *             title 标题
-     *             content  内容
-     *             spendtime    花费时间
-     */
-    public void update() {
-        /*String uid = getPara("uid");
-        if (StringUtils.isEmpty(uid)) {
-            renderJson(Uitls.Ajax.failure("操作失败", ""));
-
-        } else {*/
-            String taskid = getPara("taskid");
-            TasksModel task = TasksModel.me.findById(taskid);
-
-            String projectid = getPara("project");
-            String assigneeid = getPara("assignee");
-            String title = getPara("title");
-            String content = getPara("content");
-            String spendtimeStr = getPara("spendtime");
-
-
+        if (StringUtils.isNoneBlank(title)) {
             if (title.trim().isEmpty()) {
                 renderJson(Uitls.Ajax.failure("任务标题不能为空", ""));
             }
+        } else {
+            renderJson(Uitls.Ajax.failure("任务标题不能为空", ""));
+        }
 
-            float spendTime = 0f;
-            try {
-                spendTime = Float.valueOf(spendtimeStr);
-            } catch (Exception ex) {
-                renderJson(Uitls.Ajax.failure("类型转换失败", ""));
-            }
-            task.set("title", title);
-            task.set("content", content);
-            task.set("project_id", projectid);
-            task.set("assignee_id", assigneeid);
-            task.set("spendtime", spendTime);
+        float spendTime = 0f;
+        try {
+            spendTime = Float.valueOf(spendtimeStr);
+        } catch (Exception ex) {
+            renderJson(Uitls.Ajax.failure("类型转换失败", ""));
+        }
+        task.set("title", title);
+        task.set("content", content);
+        task.set("project_id", projectid);
+        task.set("creator_id", cid);
+        task.set("assignee_id", assigneeid);
+        task.set("spendtime", spendTime);
+        task.set("status", 0);
+        task.set("create_time", Uitls.currentTime());
 
-            boolean flag = task.update();
-            if (flag) {
-                renderJson(Uitls.Ajax.success("修改任务成功", ""));
-            } else {
-                renderJson(Uitls.Ajax.failure("修改任务失败", ""));
-            }
+        boolean flag = false;
+        if(StringUtils.isNoneBlank(taskid)){
+            flag = task.update();
+        }else{
+            flag = task.save();
+        }
+        if (flag) {
+            renderJson(Uitls.Ajax.success("添加任务成功", ""));
+        } else {
+            renderJson(Uitls.Ajax.failure("添加任务失败", ""));
+        }
         /*}*/
-
     }
 
     /**
      * 修改任务状态状态
      * 接口：/tasks/changeTaskStatus
      * 参数：      uid
-     *             taskid：  任务ID
-     *             status：  任务状态
+     * taskid：  任务ID
+     * status：  任务状态
      */
     public void changeTaskStatus() {
         /*String uid = getPara("uid");
@@ -175,35 +141,35 @@ public class TasksController extends Controller {
             renderJson(Uitls.Ajax.failure("操作失败", ""));
 
         } else {*/
-            String taskid = getPara("taskid");
-            String statusStr = getPara("status");
-            Integer status = Integer.parseInt(statusStr);
-            TasksModel task = TasksModel.me.findById(taskid);
-            switch (status) {
-                case 0:
-                    status = 1;
-                    task.set("start_time", Uitls.currentTime());
-                    break;
-                case 1:
-                    status = 2;
-                    task.set("stop_time", Uitls.currentTime());
-                    break;
-                case 2:
-                    status = 3;
-                    task.set("stop_time", Uitls.currentTime());
-                    break;
-                default:
-                    renderJson(Uitls.Ajax.failure("状态不存在", ""));
-            }
+        String taskid = getPara("taskid");
+        String statusStr = getPara("status");
+        Integer status = Integer.parseInt(statusStr);
+        TasksModel task = TasksModel.me.findById(taskid);
+        switch (status) {
+            case 0:
+                status = 1;
+                task.set("start_time", Uitls.currentTime());
+                break;
+            case 1:
+                status = 2;
+                task.set("stop_time", Uitls.currentTime());
+                break;
+            case 2:
+                status = 3;
+                task.set("stop_time", Uitls.currentTime());
+                break;
+            default:
+                renderJson(Uitls.Ajax.failure("状态不存在", ""));
+        }
 
-            task.set("status", status);
-            boolean flag = task.update();
+        task.set("status", status);
+        boolean flag = task.update();
 
-            if (flag) {
-                renderJson(Uitls.Ajax.success("操作成功",""));
-            } else {
-                renderJson(Uitls.Ajax.failure("操作失败", ""));
-            }
+        if (flag) {
+            renderJson(Uitls.Ajax.success("操作成功", ""));
+        } else {
+            renderJson(Uitls.Ajax.failure("操作失败", ""));
+        }
         /*}*/
     }
 
@@ -256,7 +222,7 @@ public class TasksController extends Controller {
      * 获取用户所有的任务列表
      * 接口：/tasks/getTaskList
      * 参数：
-     *             userid 用户ID
+     * userid 用户ID
      * 返回值：json
      */
     public void getAssigneeTaskList() {
@@ -296,9 +262,8 @@ public class TasksController extends Controller {
      * 获取用户需要做的任务列表
      * 接口：/tasks/getAssigneeTaskList
      * 参数:
-     *          用户ID  userid
+     * 用户ID  userid
      * 返回值：json
-     *
      */
     public void getTaskList() {
         /*String uid = getPara("uid");*/

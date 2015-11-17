@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12">
         <button class="btn btn-default" data-toggle="modal"
-                onclick="RenderPage('projectAndUser','app-context','model');" data-target="#myModal" type="button">新增
+                onclick="RenderPage('projectAndUser','app-context','taskedit',null);" data-target="#myModal" type="button">新增
         </button>
     </div>
 </div>
@@ -27,17 +27,17 @@
             <tbody>
             {{each data.data as task i}}
             <tr>
-                <td>{{i}}</td>
-                <td>{{task.projectname}}</td>
-                <td>{{task.title}}</td>
-                <td>{{task.content}}</td>
-                <td>{{task.spendtime}}</td>
-                <td>{{task.creatorname}}</td>
-                <td>{{task.assigneename}}</td>
-                <td>{{task.create_time}}</td>
-                <td>{{task.start_time}}</td>
-                <td>{{task.stop_time}}</td>
-                <td>
+                <td style="vertical-align: middle">{{i}}</td>
+                <td style="vertical-align: middle">{{task.projectname}}</td>
+                <td style="vertical-align: middle">{{task.title}}</td>
+                <td style="vertical-align: middle">{{task.content}}</td>
+                <td style="vertical-align: middle">{{task.spendtime}}</td>
+                <td style="vertical-align: middle">{{task.creatorname}}</td>
+                <td style="vertical-align: middle">{{task.assigneename}}</td>
+                <td style="vertical-align: middle">{{task.create_time}}</td>
+                <td style="vertical-align: middle">{{task.start_time}}</td>
+                <td style="vertical-align: middle">{{task.stop_time}}</td>
+                <td style="vertical-align: middle">
                     {{if task.status == '0'}}
                     未开始
                     {{else if task.status == '1'}}
@@ -49,22 +49,21 @@
                     {{/if}}
                 </td>
                 <td>
-                    <button class="btn btn-default"  type="button" onclick="$f('tasks.task.task',this)">修改</button>
-                    &nbsp;&nbsp;
-                    {{if task.status == '0'}}
-                    <button class="btn btn-default" type="button"
-                            onclick="updateStatus('{{task.status}}','{{task.id}}')">开始
-                    </button>
-                    &nbsp;&nbsp;
-                    {{else if task.status == '1'}}
-                    <button class="btn btn-default" type="button"
-                            onclick="updateStatus('{{task.status}}','{{task.id}}')">完成
-                    </button>
-                    &nbsp;&nbsp;
-                    {{/if}}
-                    <button class="btn btn-default" type="button"
-                            onclick="updateStatus('{{task.status}}','{{task.id}}')">撤销
-                    </button>
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button class="btn btn-default"  type="button" onclick="RenderPage('projectAndUser','app-context','taskedit','{{task.id}}');">修改</button>
+                        {{if task.status == '0'}}
+                        <button class="btn btn-default" type="button"
+                                onclick="$f('tasks.task.task',this)">开始
+                        </button>
+                        {{else if task.status == '1'}}
+                        <button class="btn btn-default" type="button"
+                                onclick="$f('tasks.task.task',this)">完成
+                        </button>
+                        {{/if}}
+                        <button class="btn btn-default" type="button"
+                                onclick="$f('tasks.task.task',this)">撤销
+                        </button>
+                    </div>
                 </td>
             </tr>
             {{/each}}

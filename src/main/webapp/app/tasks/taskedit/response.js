@@ -1,8 +1,15 @@
 /**
  * Created by kingcc on 15-11-10.
  */
-$f("df","tasks.model.response",function(_data,_scope){
+$f("df","tasks.taskedit.response",function(_data,_scope){
     return _data;
+    /*return {
+        data:{
+            projects:[],
+            users:[],
+            taskId:1
+        }
+    };*/
     /*return {
         "issuccess": true,
         "data": {

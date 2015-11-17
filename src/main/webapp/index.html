@@ -74,6 +74,7 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="//cdn.bootcss.com/handlebars.js/4.0.4/handlebars.js"></script>
 <script src="HRFrame/hrframe-2.0.js"></script>
 <script>
     $f({"path": "app", "frontmode": false});
@@ -99,8 +100,7 @@
         $f("RendPage",_data,"tasks."+_fun+"."+_fun,"tasks."+_fun+".param","tasks."+_fun+".response","tasks."+_fun+".combine");
     }
 </script>
-<script>
-    function updateStatus(status,id){
+    <!--function updateStatus(status,id){
         var canshu = {"id":id,"status":status};
         RenderPage('projectchangeProjectStatus','app-context','projectlist',canshu);
         RenderPage('projec tlist','app-context','projectlist');
@@ -121,8 +121,7 @@
         RenderPage('add','app-context','tasklist',canshu);
         $('#myModal').modal('hide');
         RenderPage('mytask','app-context','tasklist')
-    }
-</script>
+    }-->
 
 </body>
 </html>
