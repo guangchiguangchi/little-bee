@@ -1,7 +1,8 @@
 <div class="row">
     <div class="col-md-12">
         <button class="btn btn-default" data-toggle="modal"
-                onclick="RenderPage('projectAndUser','app-context','taskedit',null);" data-target="#myModal" type="button">新增
+                onclick="RenderPage('projectAndUser','app-context','taskedit',null);" data-target="#myModal"
+                type="button">新增
         </button>
     </div>
 </div>
@@ -50,18 +51,20 @@
                 </td>
                 <td>
                     <div class="btn-group" role="group" aria-label="...">
-                        <button class="btn btn-default"  type="button" onclick="RenderPage('projectAndUser','app-context','taskedit','{{task.id}}');">修改</button>
-                        {{if task.status == '0'}}
                         <button class="btn btn-default" type="button"
-                                onclick="$f('tasks.task.task',this)">开始
+                                onclick="RenderPage('projectAndUser','app-context','taskedit','{{task.id}}');">修改
+                        </button>
+                        {{if task.status == '0'}}
+                        <button class="btn btn-default" name="{{task.status}}" type="button"
+                                onclick="$f('tasks.taskedit.taskstatus',this)" value="{{task.id}}">开始
                         </button>
                         {{else if task.status == '1'}}
-                        <button class="btn btn-default" type="button"
-                                onclick="$f('tasks.task.task',this)">完成
+                        <button class="btn btn-default" name="{{task.status}}" type="button"
+                                onclick="$f('tasks.taskedit.taskstatus',this)" value="{{task.id}}">完成
                         </button>
                         {{/if}}
-                        <button class="btn btn-default" type="button"
-                                onclick="$f('tasks.task.task',this)">撤销
+                        <button class="btn btn-default" name="2" type="button"
+                                onclick="$f('tasks.taskedit.taskstatus',this)" value="{{task.id}}">撤销
                         </button>
                     </div>
                 </td>

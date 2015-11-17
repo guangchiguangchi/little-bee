@@ -6,5 +6,7 @@ $f("df", "tasks.taskedit.param", function (_param) {
         case "projectAndUser":
             return {url: "/tasks/projectAndUser?userid=" + _param.canshu, data:{}, target: _param.target};
             break;
+        case "changeTaskStatus":
+            return {url: "/tasks/changeTaskStatus", data:{taskid:_param.canshu,status:_param.status}, target: _param.target};
     }
 });

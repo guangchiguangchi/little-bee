@@ -74,7 +74,6 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script src="//cdn.bootcss.com/handlebars.js/4.0.4/handlebars.js"></script>
 <script src="HRFrame/hrframe-2.0.js"></script>
 <script>
     $f({"path": "app", "frontmode": false});
@@ -94,6 +93,14 @@
     function RenderPage(_action,_target,uri,canshu){
 
         var _data={"target":_target,"action":_action,"canshu":canshu};
+        var _fun=uri;
+
+        //           初始参数  页面地址              参数处理             返回值处理           模板合成
+        $f("RendPage",_data,"tasks."+_fun+"."+_fun,"tasks."+_fun+".param","tasks."+_fun+".response","tasks."+_fun+".combine");
+    }
+    function RenderPage(_action,_target,uri,canshu,status){
+
+        var _data={"target":_target,"action":_action,"canshu":canshu,"status":status};
         var _fun=uri;
 
         //           初始参数  页面地址              参数处理             返回值处理           模板合成
