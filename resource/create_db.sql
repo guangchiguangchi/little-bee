@@ -32,12 +32,14 @@ create table bee_projects(
   id int not null PRIMARY key AUTO_INCREMENT,
   projectname varchar(50) not null,
   content varchar(500) null,
-  create_time varchar(20) not null,
+  create_time varchar(50) not null,
   status int not null
 );
 
 create table bee_logs(
   id int not null PRIMARY key AUTO_INCREMENT,
-  user_id int not null,
+--   user_id int not null,
+  taskid varchar(50),
+--   log_time varchar(50),
   log varchar(1000)
 );

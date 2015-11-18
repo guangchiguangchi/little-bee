@@ -2,10 +2,10 @@
  *
  * Created by kingcc on 15-11-10.
  */
-$f("df","tasks.taskedit.combine",function(_temp,_resp,_scope){
+$f("df","tasks.logslist.combine",function(_temp,_resp,_scope){
     var render = template.compile(_temp);
     var html = render(_resp);
-    $("#app-dialog").html(html);
-    $('#myModal').modal();
+
+    document.getElementById(_scope.target).innerHTML = html;
     return;
 });

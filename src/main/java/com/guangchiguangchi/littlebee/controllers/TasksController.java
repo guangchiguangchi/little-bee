@@ -3,10 +3,12 @@ package com.guangchiguangchi.littlebee.controllers;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.guangchiguangchi.littlebee.common.Uitls;
+import com.guangchiguangchi.littlebee.models.LogsModel;
 import com.guangchiguangchi.littlebee.models.ProjectModel;
 import com.guangchiguangchi.littlebee.models.TasksModel;
 import com.guangchiguangchi.littlebee.models.UserModel;
 import com.jfinal.core.Controller;
+import com.sun.deploy.uitoolkit.impl.fx.Utils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Timestamp;
@@ -78,6 +80,7 @@ public class TasksController extends Controller {
 
         } else {*/
         TasksModel task = null;
+        LogsModel log = new LogsModel();
         String taskid = getPara("taskid");
         if (StringUtils.isNoneBlank(taskid)) {
             task = TasksModel.me.findById(taskid);
@@ -116,6 +119,10 @@ public class TasksController extends Controller {
 
         boolean flag = false;
         if(StringUtils.isNoneBlank(taskid)){
+            log.set("log_time", Uitls.currentTime());
+            log.set("log", "修改操作");
+            log.set("taskid",taskid);
+            log.save();
             flag = task.update();
         }else{
             flag = task.save();
@@ -145,23 +152,29 @@ public class TasksController extends Controller {
         String statusStr = getPara("status");
         Integer status = Integer.parseInt(statusStr);
         TasksModel task = TasksModel.me.findById(taskid);
+        LogsModel log = new LogsModel();
         switch (status) {
             case 0:
                 status = 1;
                 task.set("start_time", Uitls.currentTime());
+                log.set("log","开始任务");
                 break;
             case 1:
                 status = 2;
                 task.set("stop_time", Uitls.currentTime());
+                log.set("log","完成任务");
                 break;
             case 2:
                 status = 3;
                 task.set("stop_time", Uitls.currentTime());
+                log.set("log","撤销任务");
                 break;
             default:
                 renderJson(Uitls.Ajax.failure("状态不存在", ""));
         }
-
+        log.set("taskid",taskid);
+        log.set("log_time",Uitls.currentTime());
+        log.save();
         task.set("status", status);
         boolean flag = task.update();
 
