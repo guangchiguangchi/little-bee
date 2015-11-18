@@ -107,28 +107,5 @@
         $f("RendPage",_data,"tasks."+_fun+"."+_fun,"tasks."+_fun+".param","tasks."+_fun+".response","tasks."+_fun+".combine");
     }
 </script>
-    <!--function updateStatus(status,id){
-        var canshu = {"id":id,"status":status};
-        RenderPage('projectchangeProjectStatus','app-context','projectlist',canshu);
-        RenderPage('projec tlist','app-context','projectlist');
-    }
-    function save(){
-        var project = $("#projectselect  option:selected").val();
-        var username = $("#userselect option:selected").val();
-        var title = $("#title").val();
-        var content = $("#content").val();
-        var speedtime = $("#speedtime").val();
-        var taskId = $("#hiddenid").val();
-
-        if(taskId == null){
-            var canshu = {"project":project,"assignee":username,"title":title,"content":content,"spendtime":speedtime,"userid":1};
-        }else{
-            var canshu = {"project":project,"assignee":username,"title":title,"content":content,"spendtime":speedtime,"userid":1,"taskid":taskId};
-        }
-        RenderPage('add','app-context','tasklist',canshu);
-        $('#myModal').modal('hide');
-        RenderPage('mytask','app-context','tasklist')
-    }-->
-
 </body>
 </html>
