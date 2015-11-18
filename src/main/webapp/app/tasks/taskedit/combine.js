@@ -4,8 +4,8 @@
  */
 $f("df","tasks.taskedit.combine",function(_temp,_resp,_scope){
     var render = template.compile(_temp);
-    var html = render(_resp);
     $("#myModal").remove();
+    var html = render(_resp);
     $("#" + _scope.target).append(html);
     $('#myModal').modal();
     return;
