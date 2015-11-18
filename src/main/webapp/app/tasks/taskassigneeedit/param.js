@@ -1,7 +1,7 @@
 /**
  * Created by kingcc on 15-11-10.
  */
-$f("df", "tasks.taskedit.param", function (_param) {
+$f("df", "tasks.taskassigneeedit.param", function (_param) {
     switch (_param.action) {
         case "projectAndUser":
             return {url: "/tasks/projectAndUser", data:{userid:_param.canshu}, target: _param.target};

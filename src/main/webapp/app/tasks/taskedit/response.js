@@ -2,7 +2,12 @@
  * Created by kingcc on 15-11-10.
  */
 $f("df","tasks.taskedit.response",function(_data,_scope){
-    return _data;
+    if(_data.issuccess){
+        console.log(_data);
+        return _data;
+    }else{
+        return _data.message;
+    }
     /*return {
         data:{
             projects:[],
