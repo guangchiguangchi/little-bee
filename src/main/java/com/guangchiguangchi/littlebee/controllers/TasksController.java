@@ -3,6 +3,7 @@ package com.guangchiguangchi.littlebee.controllers;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.guangchiguangchi.littlebee.common.Uitls;
+import com.guangchiguangchi.littlebee.models.LogsModel;
 import com.guangchiguangchi.littlebee.models.ProjectModel;
 import com.guangchiguangchi.littlebee.models.TasksModel;
 import com.guangchiguangchi.littlebee.models.UserModel;
@@ -149,19 +150,24 @@ public class TasksController extends Controller {
             case 0:
                 status = 1;
                 task.set("start_time", Uitls.currentTime());
+                LogsModel.me.set("log","开始任务");
                 break;
             case 1:
                 status = 2;
                 task.set("stop_time", Uitls.currentTime());
+                LogsModel.me.set("log","完成任务");
                 break;
             case 2:
                 status = 3;
                 task.set("stop_time", Uitls.currentTime());
+                LogsModel.me.set("log","撤销任务");
                 break;
             default:
                 renderJson(Uitls.Ajax.failure("状态不存在", ""));
         }
-
+        LogsModel.me.set("taskid",taskid);
+        LogsModel.me.set("log_time",Uitls.currentTime());
+        LogsModel.me.save();
         task.set("status", status);
         boolean flag = task.update();
 
