@@ -166,7 +166,6 @@ public class TasksController extends Controller {
                 renderJson(Uitls.Ajax.failure("状态不存在", ""));
         }
         LogsModel.me.set("taskid",taskid);
-        LogsModel.me.set("log_time",Uitls.currentTime());
         LogsModel.me.save();
         task.set("status", status);
         boolean flag = task.update();
