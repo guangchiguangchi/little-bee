@@ -10,6 +10,14 @@ $f('df','tasks.taskedit.task',function(_obj){
     var content = $("#task_content").val();
     var speedtime = $("#task_speedtime").val();
     var hiddenid = $("#taskhiddenid").val();
-    var _data = {userid:1,project:project,assignee:username,title:title,content:content,spendtime:speedtime,taskid:hiddenid};
+    var _data = {
+        uid:window.location.href.split('uid=')[1],
+        'project':project,
+        'assignee':username,
+        'title':title,
+        'content':content,
+        'spendtime':speedtime,
+        'taskid':hiddenid
+    };
     $f('SendData',_data,'tasks.taskedit.addtaskreq','tasks.taskedit.addtaskresp');
 });

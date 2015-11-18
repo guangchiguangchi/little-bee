@@ -22,10 +22,10 @@ import java.util.List;
 public class TasksController extends Controller {
 
     public void projectAndUser() {
-        String userid = getPara("userid");
+        String taskid = getPara("taskid");
         JSONObject objJson = new JSONObject();
-        if (StringUtils.isNotBlank(userid) && !("null".equals(userid))) {
-            TasksModel task = TasksModel.me.findById(userid);
+        if (StringUtils.isNotBlank(taskid) && !("null".equals(taskid))) {
+            TasksModel task = TasksModel.me.findById(taskid);
             Integer taskId = task.get("id");
             objJson.put("taskId", taskId);
             String taskTitle = task.get("title");
@@ -74,7 +74,7 @@ public class TasksController extends Controller {
      */
     public void editTask() {
         /*String uid = getPara("uid");*/
-        String cid = getPara("userid");
+        Integer cid = getAttr("userid");
         /*if (StringUtils.isEmpty(uid)) {
             renderJson(Uitls.Ajax.failure("操作失败", ""));
 
@@ -143,11 +143,6 @@ public class TasksController extends Controller {
      * status：  任务状态
      */
     public void changeTaskStatus() {
-        /*String uid = getPara("uid");
-        if (StringUtils.isEmpty(uid)) {
-            renderJson(Uitls.Ajax.failure("操作失败", ""));
-
-        } else {*/
         String taskid = getPara("taskid");
         String statusStr = getPara("status");
         Integer status = Integer.parseInt(statusStr);
@@ -239,16 +234,7 @@ public class TasksController extends Controller {
      * 返回值：json
      */
     public void getAssigneeTaskList() {
-
-        /*String uid = getPara("uid");*/
-        String cid = getPara("userid");
-        /*if (StringUtils.isEmpty(uid)) {
-            renderJson(Uitls.Ajax.failure("操作失败", ""));
-
-        }*/
-        if (StringUtils.isEmpty(cid)) {
-            renderJson(Uitls.Ajax.failure("用户ID为空", ""));
-        }
+        Integer cid = getAttr("userid");
         int listSize;
 
         List<TasksModel> creatorList = TasksModel.me.find("select bee_tasks.*,bee_projects.projectname as projectname,users.username as creatorname, " +
@@ -279,15 +265,7 @@ public class TasksController extends Controller {
      * 返回值：json
      */
     public void getTaskList() {
-        /*String uid = getPara("uid");*/
-        String cid = getPara("userid");
-        /*if (StringUtils.isEmpty(uid)) {
-            renderJson(Uitls.Ajax.failure("操作失败", ""));
-
-        }*/
-        if (StringUtils.isEmpty(cid)) {
-            renderJson(Uitls.Ajax.failure("用户ID为空", ""));
-        }
+        Integer cid = getAttr("userid");
         int listSize;
         List<TasksModel> assigneeList = TasksModel.me.find("select bee_tasks.*,bee_projects.projectname as projectname,users.username as creatorname, " +
                 " user.username as assigneename" +

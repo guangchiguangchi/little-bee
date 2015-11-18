@@ -4,7 +4,7 @@
 $f("df", "tasks.taskassigneeedit.param", function (_param) {
     switch (_param.action) {
         case "projectAndUser":
-            return {url: "/tasks/projectAndUser", data:{userid:_param.canshu}, target: _param.target};
+            return {url: "/tasks/projectAndUser", data:{uid:_param.uid,taskid:_param.canshu}, target: _param.target};
             break;
         case "changeTaskStatus":
             return {url: "/tasks/changeTaskStatus", data:{taskid:_param.canshu,status:_param.status}, target: _param.target};
