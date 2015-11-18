@@ -146,27 +146,28 @@ public class TasksController extends Controller {
         String statusStr = getPara("status");
         Integer status = Integer.parseInt(statusStr);
         TasksModel task = TasksModel.me.findById(taskid);
+        LogsModel log = new LogsModel();
         switch (status) {
             case 0:
                 status = 1;
                 task.set("start_time", Uitls.currentTime());
-                LogsModel.me.set("log","开始任务");
+                log.set("log","开始任务");
                 break;
             case 1:
                 status = 2;
                 task.set("stop_time", Uitls.currentTime());
-                LogsModel.me.set("log","完成任务");
+                log.set("log","完成任务");
                 break;
             case 2:
                 status = 3;
                 task.set("stop_time", Uitls.currentTime());
-                LogsModel.me.set("log","撤销任务");
+                log.set("log","撤销任务");
                 break;
             default:
                 renderJson(Uitls.Ajax.failure("状态不存在", ""));
         }
-        LogsModel.me.set("taskid",taskid);
-        LogsModel.me.save();
+        log.set("taskid",taskid);
+        log.save();
         task.set("status", status);
         boolean flag = task.update();
 
