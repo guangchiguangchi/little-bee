@@ -64,7 +64,7 @@ public class LogsController  extends Controller {
      *       projectname    项目名称
      *       log            日志内容
      * 返回： json
-     */
+     *//*
     public void update(){
         String id = getPara("id");
         String user_id = getPara("user_id");
@@ -94,7 +94,7 @@ public class LogsController  extends Controller {
         }
     }
 
-    /**
+    *//**
      * 删除日志
      *
      * 接口： /logs/delete
@@ -102,7 +102,7 @@ public class LogsController  extends Controller {
      * 参数：
      *       id    日志id
      * 返回： json
-     */
+     *//*
     public void delete(){
         String id = getPara("id");
         LogsModel project = LogsModel.me.findById(id);
@@ -115,7 +115,7 @@ public class LogsController  extends Controller {
             renderJson(Uitls.Ajax.failure("删除失败", ""));
         }
 
-    }
+    }*/
 
     /**
      *  日志列表
@@ -125,7 +125,10 @@ public class LogsController  extends Controller {
      */
     public void list(){
         List<LogsModel> logsList = null;
-        logsList = LogsModel.me.find("select * from bee_logs");
+        logsList = LogsModel.me.find("select bee_logs.*,bee_tasks.title as title,bee_tasks.spendtime as spendtime,bee_tasks.start_time as start_time," +
+                " bee_tasks.stop_time as stop_time,bee_tasks.create_time as create_time,bee_projects.projectname as projectname,user.username as username,u.username as creatorname from bee_logs join bee_tasks on bee_logs.taskid = bee_tasks.id " +
+                " join bee_projects on bee_tasks.project_id = bee_projects.id join bee_users as user on bee_tasks.assignee_id = user.id join  bee_users as u on bee_tasks.creator_id = u.id order by bee_logs.id ");
+
         int listSize = 0;
         listSize = logsList.size();
         JSONObject objJson = new JSONObject();

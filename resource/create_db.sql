@@ -38,8 +38,8 @@ create table bee_projects(
 
 create table bee_logs(
   id int not null PRIMARY key AUTO_INCREMENT,
-  user_id int not null,
-  projectname varchar(50),
-  log_time varchar(50),
+--   user_id int not null,
+  taskid varchar(50),
+--   log_time varchar(50),
   log varchar(1000)
 );
