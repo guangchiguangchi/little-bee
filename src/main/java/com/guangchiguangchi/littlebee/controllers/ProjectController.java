@@ -35,12 +35,10 @@ public class ProjectController extends Controller {
             renderJson(Uitls.Ajax.failure("项目名称和内容不能为空", ""));
             return;
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date(Uitls.currentTime());
         ProjectModel project = new ProjectModel();
         project.set("projectname", projectname);
         project.set("content", content);
-        project.set("create_time",sdf.format(date));
+        project.set("create_time",Uitls.currentTime());
         project.set("status", 0);
 
         boolean flag = project.save();
@@ -121,10 +119,8 @@ public class ProjectController extends Controller {
             project = ProjectModel.me.findById(id);
         }
         else{
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date date = new Date(Uitls.currentTime());
             project = new ProjectModel();
-            project.set("create_time",sdf.format(date));
+            project.set("create_time",Uitls.currentTime());
             project.set("status",0);
         }
         String projectname = getPara("projectname");
