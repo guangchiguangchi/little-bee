@@ -8,6 +8,7 @@ import com.guangchiguangchi.littlebee.models.ProjectModel;
 import com.guangchiguangchi.littlebee.models.TasksModel;
 import com.guangchiguangchi.littlebee.models.UserModel;
 import com.jfinal.core.Controller;
+import com.sun.deploy.uitoolkit.impl.fx.Utils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Timestamp;
@@ -79,6 +80,7 @@ public class TasksController extends Controller {
 
         } else {*/
         TasksModel task = null;
+        LogsModel log = new LogsModel();
         String taskid = getPara("taskid");
         if (StringUtils.isNoneBlank(taskid)) {
             task = TasksModel.me.findById(taskid);
@@ -117,6 +119,10 @@ public class TasksController extends Controller {
 
         boolean flag = false;
         if(StringUtils.isNoneBlank(taskid)){
+            log.set("log_time", Uitls.currentTime());
+            log.set("log", "修改操作");
+            log.set("taskid",taskid);
+            log.save();
             flag = task.update();
         }else{
             flag = task.save();
