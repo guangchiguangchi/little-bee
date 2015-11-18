@@ -27,7 +27,8 @@ public class JFConfig extends JFinalConfig{
     @Override
     public void configRoute(Routes me) {
         loadPropertyFile("a_little_config.txt");
-        me.add("/", AdminController.class, "/");
+        me.add("/", AdminController.class, "/login");
+        me.add("/home", HomeController.class, "/");
         me.add("/users", UserController.class);
         me.add("/projects", ProjectController.class);
         me.add("/tasks", TasksController.class);
@@ -51,6 +52,7 @@ public class JFConfig extends JFinalConfig{
     @Override
     public void configInterceptor(Interceptors me) {
 
+        me.add(new LoginInterceptor());
     }
 
     @Override

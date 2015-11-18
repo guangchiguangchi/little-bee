@@ -9,11 +9,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="http://v3.bootcss.com/favicon.ico">
-
     <title>allview-little-bee</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
     <script src="HRFrame/template.js"></script>
 </head>
 
@@ -74,7 +74,7 @@
      ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
-<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
 <script src="HRFrame/hrframe-2.0.js"></script>
 <script>
     $f({"path": "app", "frontmode": false});
@@ -101,7 +101,9 @@
     }
     function RenderPage(_action,_target,uri,canshu,status){
 
-        var _data={"target":_target,"action":_action,"canshu":canshu,"status":status};
+        var _data={
+            'uid':window.location.href.split('uid=')[1],
+            "target":_target,"action":_action,"canshu":canshu,"status":status};
         var _fun=uri;
 
         //           初始参数  页面地址              参数处理             返回值处理           模板合成
