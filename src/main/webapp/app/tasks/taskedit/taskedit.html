@@ -2,12 +2,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form id="taskform">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">新建任务</h4>
-            </div>
-            <div class="modal-body">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">新建任务</h4>
+                </div>
+                <div class="modal-body">
                     <div class="form-group">
                         <input id="taskhiddenid" type="hidden" value="{{data.taskId}}">
                         <label class="control-label">产品:</label>
@@ -27,7 +27,8 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">标题（不可空）:</label>
-                        <input id="task_title" type="text" class="form-control" name="tasktitle" value="{{data.taskTitle}}" />
+                        <input id="task_title" type="text" class="form-control" name="tasktitle"
+                               value="{{data.taskTitle}}"/>
                     </div>
                     <div class="form-group">
                         <label class="control-label">内容:</label>
@@ -35,14 +36,14 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">工时（自然数）:</label>
-                        <input id="task_speedtime" type="text" class="form-control" name="taskspendtime" value="{{data.taskSpendTime}}"/>
+                        <input id="task_speedtime" type="text" class="form-control" name="taskspendtime"
+                               value="{{data.taskSpendTime}}"/>
                     </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" onclick="$f('tasks.taskedit.task',this)" class="btn btn-primary">保存</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" onclick="$f('tasks.taskedit.task',this)" class="btn btn-primary">保存</button>
+                </div>
             </form>
         </div>
     </div>
