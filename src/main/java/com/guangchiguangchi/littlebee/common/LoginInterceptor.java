@@ -18,6 +18,10 @@ public class LoginInterceptor implements Interceptor {
             inv.invoke();
         }else {
             String uid = inv.getController().getPara("uid");
+            int prefix =  uid.indexOf("#");
+            if(prefix>0){
+               uid= uid.replace("#","");
+            }
             if (uid != null) {
                 List<UserModel> users = UserModel.me.find("select * from bee_users where uid=?", uid);
                 if (users.size() == 1) {
