@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-md-12">
-        <button class="btn btn-default" type="submit">button</button>
-        <button class="btn btn-default" type="submit">button</button>
-        <button class="btn btn-default" type="submit">button</button>
+        <button class="btn btn-default" data-toggle="modal"
+                onclick="RenderPage('projectAddUpdate','app-context','projectedit',null);
+                " data-target="#myModal" type="button">增加</button>
     </div>
 </div>
 <div class="row">
@@ -21,42 +21,47 @@
             <tbody>
             {{each data.projects as project i}}
             <tr>
-                <td>{{i}}</td>
-                <td>{{project.projectname}}</td>
-                <td>{{project.content}}</td>
-                <td>{{project.create_time}}</td>
+                <td style="vertical-align: middle">{{i}}</td>
+                <td style="vertical-align: middle">{{project.projectname}}</td>
+                <td style="vertical-align: middle">{{project.content}}</td>
+                <td style="vertical-align: middle">{{project.create_time}}</td>
 
                     {{if project.status == '0'}}
-                <td>
+                <td style="vertical-align: middle">
                     未开始
                 </td>
-                <td>
-                    <button class="btn btn-default" type="submit" onclick="updateStatus(0,'{{project.id}}')">开始</button>
-                    &nbsp
-                    <button class="btn btn-default" type="submit" onclick="updateStatus(2,'{{project.id}}')">撤销</button>
+                <td style="vertical-align: middle">
+                    <button class="btn btn-default"  type="button" onclick="RenderPage('projectAddUpdate','app-context','projectedit','{{project.id}}');">修改</button>
+                    <button class="btn btn-default" type="submit" name="{{project.status}}" onclick="$f('tasks.projectedit.projectstatus',this)" value="{{project.id}}">开始</button>
+
+                    <button class="btn btn-default" type="submit" name="{{project.status}}" onclick="$f('tasks.projectedit.projectstatus',this)" value="{{project.id}}">撤销</button>
                 </td>
                     {{else if project.status == '1'}}
-                <td>
+                <td style="vertical-align: middle">
                     已开始
                 </td>
-                <td>
-                    <button class="btn btn-default" type="submit" onclick="updateStatus(1,'{{project.id}}')">完成</button>
-                    &nbsp
-                    <button class="btn btn-default" type="submit" onclick="updateStatus(2,'{{project.id}}')">撤销</button>
+                <td style="vertical-align: middle">
+                    <button class="btn btn-default"  type="button" onclick="RenderPage('projectAddUpdate','app-context','projectedit','{{project.id}}');">修改</button>
+                    <button class="btn btn-default" type="submit" name="{{project.status}}" onclick="$f('tasks.projectedit.projectstatus',this)" value="{{project.id}}">完成</button>
+
+                    <button class="btn btn-default" type="submit" name="{{project.status}}" onclick="$f('tasks.projectedit.projectstatus',this)" value="{{project.id}}">撤销</button>
                 </td>
                     {{else if project.status == '2'}}
-                <td>
+                <td style="vertical-align: middle">
                     已完成
                 </td>
-                <td>
-                    &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 已完成
+                <td style="vertical-align: middle">
+                    <button class="btn btn-default"  type="button" onclick="RenderPage('projectAddUpdate','app-context','projectedit','{{project.id}}');">修改</button>
+                    已完成
                 </td>
                     {{else if project.status == '3'}}
-                <td>
+                <td style="vertical-align: middle">
                     已撤销
                 </td>
-                <td>
-                    &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 已撤销
+                <td style="vertical-align: middle">
+                    <button class="btn btn-default"  type="button" onclick="RenderPage('projectAddUpdate','app-context','projectedit','{{project.id}}');">修改</button>
+
+                    已撤销
                 </td>
                     {{/if}}
 

@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.guangchiguangchi.littlebee.common.Uitls;
 import com.guangchiguangchi.littlebee.models.ProjectModel;
 import com.jfinal.core.Controller;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -46,6 +47,26 @@ public class ProjectController extends Controller {
         }
 
     }
+    /**
+     * 新增和修改弹框
+     *
+     * 接口： /projects/addAndUpdate
+     * 返回： json
+     */
+    public void addAndUpdate(){
+        String id = getPara("id");
+        JSONObject objJson = new JSONObject();
+        if (StringUtils.isNotBlank(id) && !("null".equals(id))) {
+            ProjectModel project = ProjectModel.me.findById(id);
+            Integer projectId = project.get("id");
+            objJson.put("id", projectId);
+            String projectname = project.get("projectname");
+            objJson.put("projectname", projectname);
+            String projectContent = project.get("content");
+            objJson.put("content", projectContent);
+        }
+        renderJson(Uitls.Ajax.success("成功", objJson));
+    }
 
     /**
      * 修改项目
@@ -81,7 +102,48 @@ public class ProjectController extends Controller {
         }
 
     }
-
+    /**
+     * 任务添加
+     * 接口：/projects/editProject
+     * 参数：      id
+     * projectname    项目名称
+     * content         内容
+     * 返回值：json
+     */
+    public void editProject(){
+        String id = getPara("id");
+        ProjectModel project = null;
+        if(StringUtils.isNoneBlank(id)){
+            project = ProjectModel.me.findById(id);
+        }
+        else{
+            project = new ProjectModel();
+            project.set("create_time",123);
+            project.set("status",0);
+        }
+        String projectname = getPara("projectname");
+        String content = getPara("content");
+        if (StringUtils.isNoneBlank(projectname)) {
+            if (projectname.trim().isEmpty()) {
+                renderJson(Uitls.Ajax.failure("项目名称不能为空", ""));
+            }
+        } else {
+            renderJson(Uitls.Ajax.failure("项目名称不能为空", ""));
+        }
+        project.set("projectname",projectname);
+        project.set("content",content);
+        boolean flag = false;
+        if(StringUtils.isNoneBlank(id)){
+            flag = project.update();
+        }else{
+            flag = project.save();
+        }
+        if (flag) {
+            renderJson(Uitls.Ajax.success("添加项目成功", ""));
+        } else {
+            renderJson(Uitls.Ajax.failure("添加项目失败", ""));
+        }
+    }
     /**
      * 修改项目的状态
      *
