@@ -256,7 +256,7 @@ public class TasksController extends Controller {
                 " join bee_projects on bee_tasks.project_id = bee_projects.id " +
                 " join bee_users as users on bee_tasks.creator_id = users.id " +
                 " join bee_users as user on bee_tasks.assignee_id = user.id " +
-                " where creator_id = ? and bee_tasks.status < ? order by bee_tasks.id", cid,4);
+                " where creator_id = ? and bee_tasks.status < 4 order by bee_tasks.id desc", cid);
 
         JSONObject objJson = new JSONObject();
 
@@ -286,7 +286,7 @@ public class TasksController extends Controller {
                 " join bee_projects on bee_tasks.project_id = bee_projects.id " +
                 " join bee_users as users on bee_tasks.creator_id = users.id " +
                 " join bee_users as user on bee_tasks.assignee_id = user.id " +
-                " where bee_tasks.status < 2 and assignee_id = ? order by bee_tasks.id", cid);
+                " where bee_tasks.status < 2 and assignee_id = ? order by bee_tasks.id desc", cid);
         listSize = assigneeList.size();
 
         JSONObject objJson = new JSONObject();
