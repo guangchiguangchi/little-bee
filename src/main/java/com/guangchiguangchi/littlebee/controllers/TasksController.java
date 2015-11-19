@@ -171,6 +171,11 @@ public class TasksController extends Controller {
                 task.set("stop_time", Uitls.currentTime());
                 log.set("log","撤销任务");
                 break;
+            case 3:
+                status = 4;
+                task.set("stop_time", Uitls.currentTime());
+                log.set("log","删除任务");
+                break;
             default:
                 renderJson(Uitls.Ajax.failure("状态不存在", ""));
         }
@@ -250,7 +255,7 @@ public class TasksController extends Controller {
                 " join bee_projects on bee_tasks.project_id = bee_projects.id " +
                 " join bee_users as users on bee_tasks.creator_id = users.id " +
                 " join bee_users as user on bee_tasks.assignee_id = user.id " +
-                " where creator_id = ? order by bee_tasks.id", cid);
+                " where creator_id = ? and bee_tasks.status < ? order by bee_tasks.id", cid,4);
 
         JSONObject objJson = new JSONObject();
 
