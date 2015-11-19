@@ -248,7 +248,7 @@ public class ProjectController extends Controller {
      */
     public void list() {
         List<ProjectModel> projectList = null;
-        projectList = ProjectModel.me.find("select * from bee_projects where status < ?",4);
+        projectList = ProjectModel.me.find("select * from bee_projects where status < 4 order by bee_projects.id desc");
         int listSize = 0;
         listSize = projectList.size();
         JSONObject objJson = new JSONObject();

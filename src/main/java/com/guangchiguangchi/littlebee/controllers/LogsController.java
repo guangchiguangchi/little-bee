@@ -127,7 +127,7 @@ public class LogsController  extends Controller {
         List<LogsModel> logsList = null;
         logsList = LogsModel.me.find("select bee_logs.*,bee_tasks.title as title,bee_tasks.spendtime as spendtime," +
                 " bee_projects.projectname as projectname,user.username as username from bee_logs join bee_tasks on bee_logs.taskid = bee_tasks.id " +
-                " join bee_projects on bee_tasks.project_id = bee_projects.id join bee_users as user on bee_tasks.assignee_id = user.id  order by bee_logs.id ");
+                " join bee_projects on bee_tasks.project_id = bee_projects.id join bee_users as user on bee_tasks.assignee_id = user.id  order by bee_logs.id desc");
 
         int listSize = 0;
         listSize = logsList.size();
