@@ -28,11 +28,11 @@ public class ProjectController extends Controller {
      * 返回： json
      */
     public void add() {
-        Integer workgroup = getAttr("usergroup");
+       /* Integer workgroup = getAttr("usergroup");
         if(workgroup>=10){
             renderJson(Uitls.Ajax.failure("你操作没有权限", ""));
             return;
-        };
+        };*/
         String projectname = getPara("projectname");
         String content = getPara("content");
 
@@ -61,11 +61,11 @@ public class ProjectController extends Controller {
      * 返回： json
      */
     public void addAndUpdate(){
-        Integer workgroup = getAttr("usergroup");
+        /*Integer workgroup = getAttr("usergroup");
         if(workgroup>=10){
             renderJson(Uitls.Ajax.failure("你操作没有权限", ""));
             return;
-        };
+        };*/
         String id = getPara("id");
         JSONObject objJson = new JSONObject();
         if (StringUtils.isNotBlank(id) && !("null".equals(id))) {
@@ -92,11 +92,11 @@ public class ProjectController extends Controller {
      * 返回： json
      */
     public void update() {
-        Integer workgroup = getAttr("usergroup");
+       /* Integer workgroup = getAttr("usergroup");
         if(workgroup>=10){
             renderJson(Uitls.Ajax.failure("你操作没有权限", ""));
             return;
-        };
+        };*/
         String id = getPara("id");
         String projectname = getPara("projectname");
         String content = getPara("content");
@@ -128,11 +128,11 @@ public class ProjectController extends Controller {
      * 返回值：json
      */
     public void editProject(){
-        Integer workgroup = getAttr("usergroup");
+      /*  Integer workgroup = getAttr("usergroup");
         if(workgroup>=10){
             renderJson(Uitls.Ajax.failure("你操作没有权限", ""));
             return;
-        };
+        };*/
         String id = getPara("id");
         ProjectModel project = null;
         if(StringUtils.isNoneBlank(id)){
@@ -148,9 +148,11 @@ public class ProjectController extends Controller {
         if (StringUtils.isNoneBlank(projectname)) {
             if (projectname.trim().isEmpty()) {
                 renderJson(Uitls.Ajax.failure("项目名称不能为空", ""));
+                return;
             }
         } else {
             renderJson(Uitls.Ajax.failure("项目名称不能为空", ""));
+            return;
         }
         project.set("projectname",projectname);
         project.set("content",content);
@@ -177,11 +179,11 @@ public class ProjectController extends Controller {
      * 返回： json
      */
     public void changeProjectStatus() {
-        Integer workgroup = getAttr("usergroup");
+      /*  Integer workgroup = getAttr("usergroup");
         if(workgroup>=10){
             renderJson(Uitls.Ajax.failure("你操作没有权限", ""));
             return;
-        };
+        };*/
         String id = getPara("id");
         String statusStr = getPara("status");
         int status=Integer.parseInt(statusStr)+1;
@@ -221,11 +223,11 @@ public class ProjectController extends Controller {
      * 返回： json
      */
     public void delete() {
-        Integer workgroup = getAttr("usergroup");
+     /*   Integer workgroup = getAttr("usergroup");
         if(workgroup>=10){
             renderJson(Uitls.Ajax.failure("你操作没有权限", ""));
             return;
-        };
+        };*/
         String id = getPara("id");
         ProjectModel project = ProjectModel.me.findById(id);
 
