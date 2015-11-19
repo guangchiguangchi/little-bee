@@ -4,5 +4,7 @@
 $f("df","tasks.projectedit.changestatusresp",function(_data,_scope){
     if(_data.issuccess == true){
         RenderPage('projectlist','app-context','projectlist');
+    }else{
+        return alert(_data.message);
     }
 });
