@@ -27,6 +27,7 @@
             <li><a href="#" onclick="RenderPage('mytask','app-context','tasklist');" >我的任务</a></li>
             <li><a href="#" onclick="RenderPage('myassign','app-context','taskassigneelist');" >我的指派</a></li>
             <li><a href="#" onclick="RenderPage('projectlist','app-context','projectlist');">项目列表</a></li>
+            <li><a href="#" onclick="RenderPage('logslist','app-context','logslist');">日志</a></li>
         </ul>
     </div>
 </div>
@@ -47,11 +48,6 @@
 <script src="HRFrame/hrframe-2.0.js"></script>
 <script>
     $f({"path": "app", "frontmode": false});
-    console.log($f("test.fnA"));
-    console.log("1");
-    $(function () {
-        console.log("2");
-    });
     function RenderPage(_action,_target,uri,canshu,status){
 
         var _data={

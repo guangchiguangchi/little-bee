@@ -25,7 +25,7 @@ public class LogsController  extends Controller {
      *       log       日志内容
      * 返回： json
      */
-    public void add(){
+    /*public void add(){
         String user_id = getPara("user_id");
         String projectname = getPara("projectname");
         String log = getPara("log");
@@ -51,7 +51,7 @@ public class LogsController  extends Controller {
         } else {
             renderJson(Uitls.Ajax.failure("添加日志失败", ""));
         }
-    }
+    }*/
 
     /**
      * 修改日志
