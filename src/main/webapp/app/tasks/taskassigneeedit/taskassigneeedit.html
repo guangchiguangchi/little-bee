@@ -1,50 +1,47 @@
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form id="taskform">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">新建任务</h4>
-            </div>
-            <div class="modal-body">
-                    <div class="form-group">
-                        <input id="taskhiddenid" type="hidden" value="{{taskId}}">
-                        <label class="control-label">产品:</label>
-                        <select id="task_project" class="form-control" name="taskproject">
-                            {{each projects as project i}}
-                            <option value="{{project.id}}">{{project.projectname}}</option>
-                            {{/each}}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">指派人:</label>
-                        <select id="task_assignee" class="form-control" name="taskassignee">
-                            {{each users as u i}}
-                            <option value="{{u.id}}">{{u.username}}</option>
-                            {{/each}}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">标题（不可空）:</label>
-                        <input id="task_title" type="text" class="form-control" name="tasktitle" value="{{taskTitle}}" />
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">内容:</label>
-                        <textarea id="task_content" class="form-control">{{taskContent}}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">工时（自然数）:</label>
-                        <input id="task_speedtime" type="text" class="form-control" name="taskspendtime" value="{{taskSpendTime}}"/>
-                    </div>
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" onclick="$f('tasks.taskassigneeedit.task',this)" class="btn btn-primary">保存</button>
-            </div>
-            </form>
-        </div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="myModalLabel">新建任务</h4>
     </div>
+    <div class="modal-body">
+        <form id="taskform">
+            <div class="form-group">
+                <input id="taskhiddenid" type="hidden" value="{{taskId}}">
+                <label class="control-label">产品:</label>
+                <select id="task_project" class="form-control" name="taskproject">
+                    {{each projects as project i}}
+                    <option value="{{project.id}}">{{project.projectname}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">指派人:</label>
+                <select id="task_assignee" class="form-control" name="taskassignee">
+                    {{each users as u i}}
+                    <option value="{{u.id}}">{{u.username}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">标题（不可空）:</label>
+                <input id="task_title" type="text" class="form-control" name="tasktitle" value="{{taskTitle}}"/>
+            </div>
+            <div class="form-group">
+                <label class="control-label">内容:</label>
+                <textarea id="task_content" class="form-control">{{taskContent}}</textarea>
+            </div>
+            <div class="form-group">
+                <label class="control-label">工时（自然数）:</label>
+                <input id="task_speedtime" type="text" class="form-control" name="taskspendtime"
+                       value="{{taskSpendTime}}"/>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+        <button type="button" onclick="$f('tasks.taskassigneeedit.task',this)" class="btn btn-primary">保存</button>
+    </div>
+
 </div>
 </div>
