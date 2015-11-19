@@ -6,6 +6,6 @@ $f("df","tasks.taskassigneeedit.addtaskresp",function(_data,_scope) {
         $('#myModal').modal('hide');
         RenderPage('myassign','app-context','taskassigneelist');
     }else{
-        return _data.message;
+        return alert(_data.message);
     }
 });

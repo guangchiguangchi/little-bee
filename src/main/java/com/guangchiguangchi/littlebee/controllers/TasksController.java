@@ -97,16 +97,23 @@ public class TasksController extends Controller {
         if (StringUtils.isNoneBlank(title)) {
             if (title.trim().isEmpty()) {
                 renderJson(Uitls.Ajax.failure("任务标题不能为空", ""));
+                return;
             }
         } else {
             renderJson(Uitls.Ajax.failure("任务标题不能为空", ""));
+            return;
+        }
+        if(StringUtils.isEmpty(spendtimeStr)){
+            renderJson(Uitls.Ajax.failure("项目花费的时间不能为空", ""));
+            return;
         }
 
         float spendTime = 0f;
         try {
             spendTime = Float.valueOf(spendtimeStr);
         } catch (Exception ex) {
-            renderJson(Uitls.Ajax.failure("类型转换失败", ""));
+            renderJson(Uitls.Ajax.failure("系统异常，类型转换失败", ""));
+            return;
         }
         task.set("title", title);
         task.set("content", content);
