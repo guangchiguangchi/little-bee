@@ -2,7 +2,7 @@
     <div class="span12">
         <button class="btn btn-default" data-toggle="modal"
                 onclick="RenderPage('projectAddUpdate','app-dialog','projectedit',null);
-                " data-target="#myModal" type="button">增加</button>
+                " type="button">增加</button>
     </div>
 </div>
 <div class="row">
@@ -21,20 +21,20 @@
             <tbody>
             {{each projects as project i}}
             <tr>
-                <td style="vertical-align: middle">{{i}}</td>
-                <td style="vertical-align: middle">{{project.projectname}}</td>
-                <td style="vertical-align: middle">{{project.content}}</td>
-                <td style="vertical-align: middle">{{project.create_time}}</td>
-                <td style="vertical-align: middle">
-                {{if project.status == '0'}}
-                未开始
-                {{else if project.status == '1'}}
-                已开始
-                {{else if project.status == '2'}}
-                已完成
-                {{else if project.status == '3'}}
-                已撤销
-                {{/if}}
+                <td>{{i}}</td>
+                <td>{{project.projectname}}</td>
+                <td>{{project.content}}</td>
+                <td>{{project.create_time}}</td>
+                <td>
+                    {{if project.status == '0'}}
+                    未开始
+                    {{else if project.status == '1'}}
+                    已开始
+                    {{else if project.status == '2'}}
+                    已完成
+                    {{else if project.status == '3'}}
+                    已撤销
+                    {{/if}}
                 </td>
                 <td>
                     <div class="btn-group" role="group" aria-label="...">
