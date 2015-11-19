@@ -4,7 +4,7 @@
 $f("df","tasks.projectlist.param",function(_param){
     switch(_param.action){
         case "projectlist":
-            return {url:"/projects/list",data:{},target:_param.target};
+            return {url:"/projects/list",data:{uid:_param.uid},target:_param.target};
             break;
     }
 });
