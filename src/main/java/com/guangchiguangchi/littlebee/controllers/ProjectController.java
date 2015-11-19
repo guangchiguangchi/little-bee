@@ -62,7 +62,6 @@ public class ProjectController extends Controller {
      */
     public void addAndUpdate(){
         Integer workgroup = getAttr("usergroup");
-        System.out.println(workgroup);
         if(workgroup>=10){
             renderJson(Uitls.Ajax.failure("你操作没有权限", ""));
             return;
@@ -249,7 +248,7 @@ public class ProjectController extends Controller {
      */
     public void list() {
         List<ProjectModel> projectList = null;
-        projectList = ProjectModel.me.find("select * from bee_projects");
+        projectList = ProjectModel.me.find("select * from bee_projects where status < ?",4);
         int listSize = 0;
         listSize = projectList.size();
         JSONObject objJson = new JSONObject();

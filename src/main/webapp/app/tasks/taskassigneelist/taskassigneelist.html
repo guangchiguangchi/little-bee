@@ -63,8 +63,13 @@
                                 onclick="$f('tasks.taskassigneeedit.taskstatus',this)" value="{{task.id}}">完成
                         </button>
                         {{/if}}
+                        {{if task.status < '3'}}
                         <button class="btn btn-default" name="2" type="button"
                                 onclick="$f('tasks.taskassigneeedit.taskstatus',this)" value="{{task.id}}">撤销
+                        </button>
+                        {{/if}}
+                        <button class="btn btn-default" name="3" type="button"
+                                onclick="$f('tasks.taskassigneeedit.taskstatus',this)" value="{{task.id}}">删除
                         </button>
                     </div>
                 </td>

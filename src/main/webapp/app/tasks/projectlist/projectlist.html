@@ -35,6 +35,7 @@
                     <button class="btn btn-default" type="submit" name="{{project.status}}" onclick="$f('tasks.projectedit.projectstatus',this)" value="{{project.id}}">开始</button>
 
                     <button class="btn btn-default" type="submit" name="2" onclick="$f('tasks.projectedit.projectstatus',this)" value="{{project.id}}">撤销</button>
+                    <button class="btn btn-default" type="submit" name="3" onclick="$f('tasks.projectedit.projectstatus',this)" value="{{project.id}}">删除</button>
                 </td>
                     {{else if project.status == '1'}}
                 <td style="vertical-align: middle">
@@ -45,6 +46,7 @@
                     <button class="btn btn-default" type="submit" name="{{project.status}}" onclick="$f('tasks.projectedit.projectstatus',this)" value="{{project.id}}">完成</button>
 
                     <button class="btn btn-default" type="submit" name="2" onclick="$f('tasks.projectedit.projectstatus',this)" value="{{project.id}}">撤销</button>
+                    <button class="btn btn-default" type="submit" name="3" onclick="$f('tasks.projectedit.projectstatus',this)" value="{{project.id}}">删除</button>
                 </td>
                     {{else if project.status == '2'}}
                 <td style="vertical-align: middle">
@@ -52,7 +54,8 @@
                 </td>
                 <td style="vertical-align: middle">
                     <button class="btn btn-default"  type="button" onclick="RenderPage('projectAddUpdate','app-context','projectedit','{{project.id}}');">修改</button>
-                    已完成
+                    <button class="btn btn-default" type="submit" name="2" onclick="$f('tasks.projectedit.projectstatus',this)" value="{{project.id}}">撤销</button>
+                    <button class="btn btn-default" type="submit" name="3" onclick="$f('tasks.projectedit.projectstatus',this)" value="{{project.id}}">删除</button>
                 </td>
                     {{else if project.status == '3'}}
                 <td style="vertical-align: middle">
@@ -60,8 +63,7 @@
                 </td>
                 <td style="vertical-align: middle">
                     <button class="btn btn-default"  type="button" onclick="RenderPage('projectAddUpdate','app-context','projectedit','{{project.id}}');">修改</button>
-
-                    已撤销
+                    <button class="btn btn-default" type="submit" name="3" onclick="$f('tasks.projectedit.projectstatus',this)" value="{{project.id}}">删除</button>
                 </td>
                     {{/if}}
 
