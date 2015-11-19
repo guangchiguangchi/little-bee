@@ -1,9 +1,8 @@
 <div class="row">
     <div class="span12">
         <button class="btn btn-default" data-toggle="modal"
-                onclick="RenderPage('projectAddUpdate','app-context','projectedit',null);
-                " data-target="#myModal" type="button">增加
-        </button>
+                onclick="RenderPage('projectAddUpdate','app-dialog','projectedit',null);
+                " data-target="#myModal" type="button">增加</button>
     </div>
 </div>
 <div class="row">
@@ -28,9 +27,22 @@
                 <td>{{project.create_time}}</td>
 
                 {{if project.status == '0'}}
+                <td style="vertical-align: middle">{{i}}</td>
+                <td style="vertical-align: middle">{{project.projectname}}</td>
+                <td style="vertical-align: middle">{{project.content}}</td>
+                <td style="vertical-align: middle">{{project.create_time}}</td>
                 <td style="vertical-align: middle">
-                    未开始
+                {{if project.status == '0'}}
+                未开始
+                {{else if project.status == '1'}}
+                已开始
+                {{else if project.status == '2'}}
+                已完成
+                {{else if project.status == '3'}}
+                已撤销
+                {{/if}}
                 </td>
+
                 <td style="vertical-align: middle">
                     <button class="btn btn-default" type="button"
                             onclick="RenderPage('projectAddUpdate','app-context','projectedit','{{project.id}}');">修改
@@ -93,6 +105,26 @@
                     </button>
                 </td>
                 {{/if}}
+                    <button class="btn btn-default"  type="button" onclick="RenderPage('projectAddUpdate','app-dialog','projectedit','{{project.id}}');">修改</button>
+                    {{if project.status == '0'}}
+                    <button class="btn btn-default" type="submit" name="{{project.status}}" onclick="$f('tasks.projectedit.projectstatus',this)" value="{{project.id}}">开始</button>
+
+                    <button class="btn btn-default" type="submit" name="2" onclick="$f('tasks.projectedit.projectstatus',this)" value="{{project.id}}">撤销</button>
+                    <button class="btn btn-default" type="submit" name="3" onclick="$f('tasks.projectedit.projectstatus',this)" value="{{project.id}}">删除</button>
+
+                    {{else if project.status == '1'}}
+                    <button class="btn btn-default" type="submit" name="{{project.status}}" onclick="$f('tasks.projectedit.projectstatus',this)" value="{{project.id}}">完成</button>
+
+                    <button class="btn btn-default" type="submit" name="2" onclick="$f('tasks.projectedit.projectstatus',this)" value="{{project.id}}">撤销</button>
+                    <button class="btn btn-default" type="submit" name="3" onclick="$f('tasks.projectedit.projectstatus',this)" value="{{project.id}}">删除</button>
+                    {{else if project.status == '2'}}
+                    <button class="btn btn-default" type="submit" name="2" onclick="$f('tasks.projectedit.projectstatus',this)" value="{{project.id}}">撤销</button>
+                    <button class="btn btn-default" type="submit" name="3" onclick="$f('tasks.projectedit.projectstatus',this)" value="{{project.id}}">删除</button>
+                    {{else if project.status == '3'}}
+
+                    <button class="btn btn-default" type="submit" name="3" onclick="$f('tasks.projectedit.projectstatus',this)" value="{{project.id}}">删除</button>
+                    {{/if}}
+                </td>
             </tr>
             {{/each}}
             </tbody>
