@@ -2,7 +2,6 @@
  * Created by byj on 2015/11/16.
  */
 $f('df','tasks.taskassigneeedit.task',function(_obj){
-    console.log("aaa"+_obj);
 
     var project = $("#task_project  option:selected").val();
     var username = $("#task_assignee option:selected").val();
