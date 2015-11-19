@@ -33,8 +33,10 @@ public class TasksController extends Controller {
             setAttr("taskTitle", taskTitle);
             String taskContent = task.get("content");
             objJson.put("taskContent", taskContent);
-            Integer taskSpendTime = task.get("spendtime");
+            float taskSpendTime = task.get("spendtime");
             objJson.put("taskSpendTime", taskSpendTime);
+            objJson.put("project_id",task.get("project_id"));
+            objJson.put("assignee_id",task.get("assignee_id"));
         }
         List<UserModel> userList = null;
         userList = UserModel.me.find("select id,username from bee_users");
@@ -111,8 +113,13 @@ public class TasksController extends Controller {
         float spendTime = 0f;
         try {
             spendTime = Float.valueOf(spendtimeStr);
+
         } catch (Exception ex) {
             renderJson(Uitls.Ajax.failure("系统异常，类型转换失败", ""));
+            return;
+        }
+        if(spendTime<0 || spendTime>99){
+            renderJson(Uitls.Ajax.failure("用时不合理.", ""));
             return;
         }
         task.set("title", title);
