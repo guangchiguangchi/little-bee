@@ -20,17 +20,17 @@
             <tbody>
             {{each data as task i}}
             <tr>
-                <td style="vertical-align: middle">{{i}}</td>
-                <td style="vertical-align: middle">{{task.projectname}}</td>
-                <td style="vertical-align: middle">{{task.title}}</td>
-                <td style="vertical-align: middle">{{task.content}}</td>
-                <td style="vertical-align: middle">{{task.spendtime}}</td>
-                <td style="vertical-align: middle">{{task.creatorname}}</td>
-                <td style="vertical-align: middle">{{task.assigneename}}</td>
-                <td style="vertical-align: middle">{{task.create_time}}</td>
-                <td style="vertical-align: middle">{{task.start_time}}</td>
-                <td style="vertical-align: middle">{{task.stop_time}}</td>
-                <td style="vertical-align: middle">
+                <td>{{i}}</td>
+                <td>{{task.projectname}}</td>
+                <td>{{task.title}}</td>
+                <td>{{task.content}}</td>
+                <td>{{task.spendtime}}</td>
+                <td>{{task.creatorname}}</td>
+                <td>{{task.assigneename}}</td>
+                <td>{{task.create_time}}</td>
+                <td>{{task.start_time}}</td>
+                <td>{{task.stop_time}}</td>
+                <td>
                     {{if task.status == '0'}}
                     未开始
                     {{else if task.status == '1'}}
