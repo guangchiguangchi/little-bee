@@ -27,11 +27,11 @@
                 <td>{{project.create_time}}</td>
 
                 {{if project.status == '0'}}
-                <td style="vertical-align: middle">{{i}}</td>
-                <td style="vertical-align: middle">{{project.projectname}}</td>
-                <td style="vertical-align: middle">{{project.content}}</td>
-                <td style="vertical-align: middle">{{project.create_time}}</td>
-                <td style="vertical-align: middle">
+                <td>{{i}}</td>
+                <td>{{project.projectname}}</td>
+                <td>{{project.content}}</td>
+                <td>{{project.create_time}}</td>
+                <td>
                 {{if project.status == '0'}}
                 未开始
                 {{else if project.status == '1'}}
@@ -43,7 +43,7 @@
                 {{/if}}
                 </td>
 
-                <td style="vertical-align: middle">
+                <td>
                     <button class="btn btn-default" type="button"
                             onclick="RenderPage('projectAddUpdate','app-context','projectedit','{{project.id}}');">修改
                     </button>
@@ -59,7 +59,7 @@
                     </button>
                 </td>
                 {{else if project.status == '1'}}
-                <td style="vertical-align: middle">
+                <td>
                     已开始
                 </td>
                 <td style="vertical-align: middle">
@@ -78,7 +78,7 @@
                     </button>
                 </td>
                 {{else if project.status == '2'}}
-                <td style="vertical-align: middle">
+                <td>
                     已完成
                 </td>
                 <td style="vertical-align: middle">
