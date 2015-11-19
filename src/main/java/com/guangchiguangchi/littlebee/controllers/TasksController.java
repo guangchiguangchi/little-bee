@@ -178,6 +178,7 @@ public class TasksController extends Controller {
                 break;
             default:
                 renderJson(Uitls.Ajax.failure("状态不存在", ""));
+                return;
         }
         log.set("taskid",taskid);
         log.set("log_time",Uitls.currentTime());

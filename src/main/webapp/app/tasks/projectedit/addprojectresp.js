@@ -5,5 +5,7 @@ $f("df","tasks.projectedit.addprojectresp",function(_data,_scope) {
     if(_data.issuccess == true){
         $('#myModal').modal('hide');
         RenderPage('projectlist','app-context','projectlist');
+    }else{
+        return alert(_data.message);
     }
 });
