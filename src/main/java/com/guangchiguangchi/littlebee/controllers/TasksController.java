@@ -3,10 +3,7 @@ package com.guangchiguangchi.littlebee.controllers;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.guangchiguangchi.littlebee.common.Uitls;
-import com.guangchiguangchi.littlebee.models.LogsModel;
-import com.guangchiguangchi.littlebee.models.ProjectModel;
-import com.guangchiguangchi.littlebee.models.TasksModel;
-import com.guangchiguangchi.littlebee.models.UserModel;
+import com.guangchiguangchi.littlebee.models.*;
 import com.jfinal.core.Controller;
 import com.sun.deploy.uitoolkit.impl.fx.Utils;
 import org.apache.commons.lang3.StringUtils;
@@ -275,6 +272,37 @@ public class TasksController extends Controller {
         objJson.put("data", creatorArrJson);
 
         renderJson(Uitls.Ajax.success("成功", objJson));
+    }
+    /**
+     *对weekplan表进行增加操作
+     * 接口：/models/WeekPlanModel
+     */
+    public void addWeekPlan() {
+        String content = getPara("content");
+
+        String workCompletedStr = getPara("workCompleted");
+        Integer workCompleted = Integer.parseInt(workCompletedStr);
+
+        String workUnfinishedStr = getPara("workUnfinished");
+        Integer workUnfinished = Integer.parseInt(workUnfinishedStr);
+
+        String workTimeStr = getPara("workTime");
+        Float workTime = Float.parseFloat(workTimeStr);
+
+        String workUndoStr = getPara("workUndo");
+        Integer workUndo = Integer.parseInt(workUndoStr);
+
+        String personName = getPara("personName");
+
+        WeekPlanModel log = new WeekPlanModel();
+        log.set("content",content);
+        log.set("work_completed",workCompleted);
+        log.set("work_unfinishedStr",workUnfinished);
+        log.set("work_time",workTime);
+        log.set("work_undo",workUndo);
+        log.set("person_name",personName);
+        log.save();
+
     }
 
     /**
