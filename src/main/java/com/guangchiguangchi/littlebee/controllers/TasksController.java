@@ -273,6 +273,36 @@ public class TasksController extends Controller {
 
         renderJson(Uitls.Ajax.success("成功", objJson));
     }
+    /**
+     *对weekplan表进行增加操作
+     * 接口：/models/WeekPlanModel
+     */
+    public void addWeekPlan() {
+        String content = getPara("content");
+
+        String workCompletedStr = getPara("workCompleted");
+        Integer workCompleted = Integer.parseInt(workCompletedStr);
+
+        String workUnfinishedStr = getPara("workUnfinished");
+        Integer workUnfinished = Integer.parseInt(workUnfinishedStr);
+
+        String workTimeStr = getPara("workTime");
+        Float workTime = Float.parseFloat(workTimeStr);
+
+        String workUndoStr = getPara("workUndo");
+        Integer workUndo = Integer.parseInt(workUndoStr);
+
+        String personName = getPara("personName");
+        WeekPlanModel log = new WeekPlanModel();
+        log.set("content",content);
+        log.set("work_completed",workCompleted);
+        log.set("work_unfinishedStr",workUnfinished);
+        log.set("work_time",workTime);
+        log.set("work_undo",workUndo);
+        log.set("person_name",personName);
+        log.save();
+
+    }
 
     /**
      * 获取用户需要做的任务列表
@@ -361,4 +391,28 @@ public class TasksController extends Controller {
 
         renderJson(Uitls.Ajax.success("成功", objJson));
     }
+    /**
+     * 查询周报
+     * 接口：/tasks/queryWeekPlan
+     * 用户ID  userid
+     * 返回值：json
+     */
+    public void queryWeekPlan(){
+        int listSize;
+        List<WeekPlanModel> assigneeList = WeekPlanModel.me.find("select * from bee-weekplan");
+        listSize = assigneeList.size();
+
+        JSONObject objJson = new JSONObject();
+
+        JSONArray assigneeArrJson = new JSONArray();
+        for (int i = 0; i < listSize; i++) {
+            assigneeArrJson.add(assigneeList.get(i));
+        }
+        objJson.put("data", assigneeArrJson);
+
+        renderJson(Uitls.Ajax.success("成功", objJson));
+
+    }
 }
+
+
