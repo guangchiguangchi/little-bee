@@ -293,7 +293,6 @@ public class TasksController extends Controller {
         Integer workUndo = Integer.parseInt(workUndoStr);
 
         String personName = getPara("personName");
-
         WeekPlanModel log = new WeekPlanModel();
         log.set("content",content);
         log.set("work_completed",workCompleted);
