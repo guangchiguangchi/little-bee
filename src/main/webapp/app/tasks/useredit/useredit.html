@@ -1,0 +1,29 @@
+<!-- Modal -->
+<div id="myModal" class="modal hide fade hero-unit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <form class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">用户详情</h3>
+        </div>
+        <div class="modal-body">
+            <div class="control-group">
+                <label class="control-label">用户名</label>
+                <div class="controls">
+                    <input id="user_name" type="text"  name="user_name" value="{{username}}" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">密码</label>
+                <div class="controls">
+                    <input id="user_content" name="user_content" type="password" value ="{{password}}">
+                </div>
+            </div>
+
+            <input id="userhiddenid" type="hidden" value="{{id}}">
+        </div>
+        <div class="modal-footer">
+            <button type="button" onclick="" class="btn btn-primary">保存</button>
+        </div>
+
+    </form>
+</div>

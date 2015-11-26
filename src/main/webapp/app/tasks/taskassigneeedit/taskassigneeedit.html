@@ -14,7 +14,7 @@
                 <div class="controls">
                     <select id="task_project" class="form-control" name="taskproject">
                         {{each projects as project i}}
-                        <option value="{{project.id}}">{{project.projectname}}</option>
+                        <option value="{{project.id}}" {{if project.id==project_id }} selected="selected" {{/if}}>{{project.projectname}}</option>
                         {{/each}}
                     </select>
                 </div>
@@ -25,7 +25,7 @@
                 <div class="controls">
                     <select id="task_assignee" class="form-control" name="taskassignee">
                         {{each users as u i}}
-                        <option value="{{u.id}}">{{u.username}}</option>
+                        <option value="{{u.id}}" {{if u.id==assignee_id}} selected="selected" {{/if}}>{{u.username}}</option>
                         {{/each}}
                     </select>
                 </div>
