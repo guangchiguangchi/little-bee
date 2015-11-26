@@ -276,6 +276,14 @@ public class TasksController extends Controller {
     /**
      *对weekplan表进行增加操作
      * 接口：/models/WeekPlanModel
+     *  参数：
+     * content 描述
+     * workCompleted 完成的任务数
+     * workUnfinished 没完成的任务数
+     * workTime 周工作时间
+     * workUndo 撤销的任务数
+     * personName 任务人
+     * 返回值：json
      */
     public void addWeekPlan() {
         String content = getPara("content");
@@ -296,12 +304,12 @@ public class TasksController extends Controller {
         WeekPlanModel log = new WeekPlanModel();
         log.set("content",content);
         log.set("work_completed",workCompleted);
-        log.set("work_unfinishedStr",workUnfinished);
+        log.set("work_unfinished",workUnfinished);
         log.set("work_time",workTime);
         log.set("work_undo",workUndo);
         log.set("person_name",personName);
         log.save();
-
+        renderJson(Uitls.Ajax.success("成功", ""));
     }
 
     /**
@@ -369,7 +377,6 @@ public class TasksController extends Controller {
                 case 2:
                     wc++;
                     time = time + tasksList.get(i).getFloat("spendtime");
-                    ;
                     break;
                 case 3:
                     cx++;
@@ -379,14 +386,15 @@ public class TasksController extends Controller {
             }
         }
         WeekPlanModel wpm = new WeekPlanModel();
-        wpm.set("content", "qusiba");
+        String str= "姓名:" + tasksList.get(0).getStr("person_name") + ",未完成任务：" + wwc + "个,已完成任务：" + wc + "个,共用时：" + time + "小时,撤销任务：" + cx + "个";
+        wpm.set("content",str);
         wpm.set("work_completed", wc);
         wpm.set("work_unfinished", wwc);
         wpm.set("work_undo", cx);
         wpm.set("work_time", time);
         wpm.set("person_name", tasksList.get(0).getStr("person_name"));
         wpm.save();
-        tasksArrJson.add("姓名:" + tasksList.get(0).getStr("person_name") + ",未完成任务：" + wwc + "个,已完成任务：" + wc + "个,共用时：" + time + "小时,撤销任务：" + cx + "个");
+        tasksArrJson.add(str);
         objJson.put("weekplan", tasksArrJson);
 
         renderJson(Uitls.Ajax.success("成功", objJson));
@@ -394,12 +402,11 @@ public class TasksController extends Controller {
     /**
      * 查询周报
      * 接口：/tasks/queryWeekPlan
-     * 用户ID  userid
      * 返回值：json
      */
     public void queryWeekPlan(){
         int listSize;
-        List<WeekPlanModel> assigneeList = WeekPlanModel.me.find("select * from bee-weekplan");
+        List<WeekPlanModel> assigneeList = WeekPlanModel.me.find("select * from bee_weekplan");
         listSize = assigneeList.size();
 
         JSONObject objJson = new JSONObject();
