@@ -3,10 +3,7 @@ package com.guangchiguangchi.littlebee.controllers;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.guangchiguangchi.littlebee.common.Uitls;
-import com.guangchiguangchi.littlebee.models.LogsModel;
-import com.guangchiguangchi.littlebee.models.ProjectModel;
-import com.guangchiguangchi.littlebee.models.TasksModel;
-import com.guangchiguangchi.littlebee.models.UserModel;
+import com.guangchiguangchi.littlebee.models.*;
 import com.jfinal.core.Controller;
 import com.sun.deploy.uitoolkit.impl.fx.Utils;
 import org.apache.commons.lang3.StringUtils;
@@ -306,4 +303,30 @@ public class TasksController extends Controller {
 
         renderJson(Uitls.Ajax.success("成功", objJson));
     }
+
+    /**
+     * 查询周报
+     * 接口：/tasks/queryWeekPlan
+     * 用户ID  userid
+     * 返回值：json
+     */
+    public void queryWeekPlan(){
+        int listSize;
+        List<WeekPlanModel> assigneeList = WeekPlanModel.me.find("select * from bee-weekplan");
+        listSize = assigneeList.size();
+
+        JSONObject objJson = new JSONObject();
+
+        JSONArray assigneeArrJson = new JSONArray();
+        for (int i = 0; i < listSize; i++) {
+            assigneeArrJson.add(assigneeList.get(i));
+        }
+        objJson.put("data", assigneeArrJson);
+
+        renderJson(Uitls.Ajax.success("成功", objJson));
+
+    }
+
 }
+
+
