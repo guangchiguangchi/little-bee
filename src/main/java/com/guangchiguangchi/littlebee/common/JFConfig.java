@@ -1,10 +1,7 @@
 package com.guangchiguangchi.littlebee.common;
 
 import com.guangchiguangchi.littlebee.controllers.*;
-import com.guangchiguangchi.littlebee.models.LogsModel;
-import com.guangchiguangchi.littlebee.models.ProjectModel;
-import com.guangchiguangchi.littlebee.models.TasksModel;
-import com.guangchiguangchi.littlebee.models.UserModel;
+import com.guangchiguangchi.littlebee.models.*;
 import com.jfinal.config.*;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
@@ -46,7 +43,7 @@ public class JFConfig extends JFinalConfig{
         arp.addMapping("bee_tasks",TasksModel.class);
         arp.addMapping("bee_projects",ProjectModel.class);
         arp.addMapping("bee_logs",LogsModel.class);
-
+        arp.addMapping("bee_weekplan", WeekPlanModel.class);
     }
 
     @Override
