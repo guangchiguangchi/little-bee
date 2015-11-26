@@ -3,10 +3,7 @@ package com.guangchiguangchi.littlebee.controllers;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.guangchiguangchi.littlebee.common.Uitls;
-import com.guangchiguangchi.littlebee.models.LogsModel;
-import com.guangchiguangchi.littlebee.models.ProjectModel;
-import com.guangchiguangchi.littlebee.models.TasksModel;
-import com.guangchiguangchi.littlebee.models.UserModel;
+import com.guangchiguangchi.littlebee.models.*;
 import com.jfinal.core.Controller;
 import com.sun.deploy.uitoolkit.impl.fx.Utils;
 import org.apache.commons.lang3.StringUtils;
@@ -35,8 +32,8 @@ public class TasksController extends Controller {
             objJson.put("taskContent", taskContent);
             float taskSpendTime = task.get("spendtime");
             objJson.put("taskSpendTime", taskSpendTime);
-            objJson.put("project_id",task.get("project_id"));
-            objJson.put("assignee_id",task.get("assignee_id"));
+            objJson.put("project_id", task.get("project_id"));
+            objJson.put("assignee_id", task.get("assignee_id"));
         }
         List<UserModel> userList = null;
         userList = UserModel.me.find("select id,username from bee_users");
@@ -105,7 +102,7 @@ public class TasksController extends Controller {
             renderJson(Uitls.Ajax.failure("任务标题不能为空", ""));
             return;
         }
-        if(StringUtils.isEmpty(spendtimeStr)){
+        if (StringUtils.isEmpty(spendtimeStr)) {
             renderJson(Uitls.Ajax.failure("项目花费的时间不能为空", ""));
             return;
         }
@@ -118,7 +115,7 @@ public class TasksController extends Controller {
             renderJson(Uitls.Ajax.failure("系统异常，类型转换失败", ""));
             return;
         }
-        if(spendTime<0 || spendTime>99){
+        if (spendTime < 0 || spendTime > 99) {
             renderJson(Uitls.Ajax.failure("用时不合理.", ""));
             return;
         }
@@ -132,13 +129,13 @@ public class TasksController extends Controller {
         task.set("create_time", Uitls.currentTime());
 
         boolean flag = false;
-        if(StringUtils.isNoneBlank(taskid)){
+        if (StringUtils.isNoneBlank(taskid)) {
             log.set("log_time", Uitls.currentTime());
             log.set("log", "修改操作");
-            log.set("taskid",taskid);
+            log.set("taskid", taskid);
             log.save();
             flag = task.update();
-        }else{
+        } else {
             flag = task.save();
         }
         if (flag) {
@@ -166,29 +163,29 @@ public class TasksController extends Controller {
             case 0:
                 status = 1;
                 task.set("start_time", Uitls.currentTime());
-                log.set("log","开始任务");
+                log.set("log", "开始任务");
                 break;
             case 1:
                 status = 2;
                 task.set("stop_time", Uitls.currentTime());
-                log.set("log","完成任务");
+                log.set("log", "完成任务");
                 break;
             case 2:
                 status = 3;
                 task.set("stop_time", Uitls.currentTime());
-                log.set("log","撤销任务");
+                log.set("log", "撤销任务");
                 break;
             case 3:
                 status = 4;
                 task.set("stop_time", Uitls.currentTime());
-                log.set("log","删除任务");
+                log.set("log", "删除任务");
                 break;
             default:
                 renderJson(Uitls.Ajax.failure("状态不存在", ""));
                 return;
         }
-        log.set("taskid",taskid);
-        log.set("log_time",Uitls.currentTime());
+        log.set("taskid", taskid);
+        log.set("log_time", Uitls.currentTime());
         log.save();
         task.set("status", status);
         boolean flag = task.update();
@@ -303,6 +300,64 @@ public class TasksController extends Controller {
             assigneeArrJson.add(assigneeList.get(i));
         }
         objJson.put("data", assigneeArrJson);
+
+        renderJson(Uitls.Ajax.success("成功", objJson));
+    }
+
+    /**
+     * 获取个人任务完成状态
+     * 接口：/tasks/analysisTask
+     * 参数:
+     * 用户ID  id
+     * 开始时间 starttime
+     * 结束时间 endtime
+     * 返回值：json
+     */
+
+    public void analysisTask() {
+        String id = getPara("id");
+        String starttime = getPara("starttime");
+        String endtime = getPara("endtime");
+        int listSize;
+        List<TasksModel> tasksList = TasksModel.me.find("select bee_tasks.*,bee_users.username as person_name from bee_tasks join bee_users on bee_tasks.assignee_id = bee_users.id where bee_tasks.start_time>=? and bee_tasks.start_time<? and bee_users.id=?", starttime, endtime, id);
+        listSize = tasksList.size();
+        JSONObject objJson = new JSONObject();
+        JSONArray tasksArrJson = new JSONArray();
+
+        int wwc = 0, wc = 0, cx = 0;
+        float time = 0;
+        for (int i = 0; i < listSize; i++) {
+
+            int status = tasksList.get(i).getInt("status");
+            switch (status) {
+                case 0:
+                    wwc++;
+                    break;
+                case 1:
+                    wwc++;
+                    break;
+                case 2:
+                    wc++;
+                    time = time + tasksList.get(i).getFloat("spendtime");
+                    ;
+                    break;
+                case 3:
+                    cx++;
+                    break;
+                case 4:
+                    break;
+            }
+        }
+        WeekPlanModel wpm = new WeekPlanModel();
+        wpm.set("content", "qusiba");
+        wpm.set("work_completed", wc);
+        wpm.set("work_unfinished", wwc);
+        wpm.set("work_undo", cx);
+        wpm.set("work_time", time);
+        wpm.set("person_name", tasksList.get(0).getStr("person_name"));
+        wpm.save();
+        tasksArrJson.add("姓名:" + tasksList.get(0).getStr("person_name") + ",未完成任务：" + wwc + "个,已完成任务：" + wc + "个,共用时：" + time + "小时,撤销任务：" + cx + "个");
+        objJson.put("weekplan", tasksArrJson);
 
         renderJson(Uitls.Ajax.success("成功", objJson));
     }
