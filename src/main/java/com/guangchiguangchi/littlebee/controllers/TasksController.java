@@ -277,30 +277,47 @@ public class TasksController extends Controller {
      *对weekplan表进行增加操作
      * 接口：/models/WeekPlanModel
      *  参数：
+     * personName 任务人
      * content 描述
      * workCompleted 完成的任务数
      * workUnfinished 没完成的任务数
      * workTime 周工作时间
      * workUndo 撤销的任务数
-     * personName 任务人
      * 返回值：json
      */
     public void addWeekPlan() {
         String content = getPara("content");
-
-        String workCompletedStr = getPara("workCompleted");
-        Integer workCompleted = Integer.parseInt(workCompletedStr);
-
-        String workUnfinishedStr = getPara("workUnfinished");
-        Integer workUnfinished = Integer.parseInt(workUnfinishedStr);
-
-        String workTimeStr = getPara("workTime");
-        Float workTime = Float.parseFloat(workTimeStr);
-
-        String workUndoStr = getPara("workUndo");
-        Integer workUndo = Integer.parseInt(workUndoStr);
-
         String personName = getPara("personName");
+        String workCompletedStr = getPara("workCompleted");
+        String workUndoStr = getPara("workUndo");
+        String workTimeStr = getPara("workTime");
+        String workUnfinishedStr = getPara("workUnfinished");
+
+        if(personName==null||personName.trim()==null){
+            renderJson(Uitls.Ajax.failure("任务人不能为空！", ""));
+            return;
+        }
+        if(workCompletedStr==null||workCompletedStr.trim()==null){
+            renderJson(Uitls.Ajax.failure("完成任务个数不能为空！", ""));
+            return;
+        }
+        if(workUnfinishedStr==null||workUnfinishedStr.trim()==null){
+            renderJson(Uitls.Ajax.failure("未完成任务不能为空！", ""));
+            return;
+        }
+        if(workTimeStr==null||workTimeStr.trim()==null){
+            renderJson(Uitls.Ajax.failure("周工作时间不能为空！", ""));
+            return;
+        }
+        if(workUndoStr==null||workUndoStr.trim()==null){
+            renderJson(Uitls.Ajax.failure("撤销任务个数不能为空！", ""));
+            return;
+        }
+
+        Integer workCompleted = Integer.parseInt(workCompletedStr);
+        Integer workUnfinished = Integer.parseInt(workUnfinishedStr);
+        Float workTime = Float.parseFloat(workTimeStr);
+        Integer workUndo = Integer.parseInt(workUndoStr);
         WeekPlanModel log = new WeekPlanModel();
         log.set("content",content);
         log.set("work_completed",workCompleted);
@@ -356,12 +373,19 @@ public class TasksController extends Controller {
         String id = getPara("id");
         String starttime = getPara("starttime");
         String endtime = getPara("endtime");
+        if(id==null||id.trim()==null||starttime==null||starttime.trim()==null||endtime==null||endtime.trim()==null){
+            renderJson(Uitls.Ajax.success("id,开始时间和结束时间不能为空！", ""));
+            return;
+        }
         int listSize;
         List<TasksModel> tasksList = TasksModel.me.find("select bee_tasks.*,bee_users.username as person_name from bee_tasks join bee_users on bee_tasks.assignee_id = bee_users.id where bee_tasks.start_time>=? and bee_tasks.start_time<? and bee_users.id=?", starttime, endtime, id);
         listSize = tasksList.size();
         JSONObject objJson = new JSONObject();
         JSONArray tasksArrJson = new JSONArray();
-
+        if(listSize==0){
+            renderJson(Uitls.Ajax.success("没有数据！", ""));
+            return;
+        }
         int wwc = 0, wc = 0, cx = 0;
         float time = 0;
         for (int i = 0; i < listSize; i++) {
@@ -415,7 +439,7 @@ public class TasksController extends Controller {
         for (int i = 0; i < listSize; i++) {
             assigneeArrJson.add(assigneeList.get(i));
         }
-        objJson.put("data", assigneeArrJson);
+        objJson.put("weekplans", assigneeArrJson);
 
         renderJson(Uitls.Ajax.success("成功", objJson));
 
