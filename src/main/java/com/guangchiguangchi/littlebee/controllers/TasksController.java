@@ -364,8 +364,8 @@ public class TasksController extends Controller {
      * 接口：/tasks/analysisTask
      * 参数:
      * 用户ID  id
-     * 开始时间 starttime
-     * 结束时间 endtime
+     * 开始时间 starttime 格式：yyyy-MM-dd 如（2015-01-01）
+     * 结束时间 endtime 格式 yyyy-MM-dd 如（2015-01-01）
      * 返回值：json
      */
 
