@@ -280,7 +280,6 @@ public class TasksController extends Controller {
      * 接口：/models/WeekPlanModel
      *  参数：
      * personName 任务人
-     * content 描述
      * workCompleted 完成的任务数
      * workUnfinished 没完成的任务数
      * workTime 周工作时间
