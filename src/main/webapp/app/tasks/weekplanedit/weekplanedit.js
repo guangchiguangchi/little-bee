@@ -3,7 +3,7 @@
  */
 $f('df','tasks.weekplanedit.weekplanedit',function(_obj){
 
-    var username = $("#weekplan_id").val();
+    var username = $("#username").val();
     var starttime = $("#weekplan_starttime").val();
     var endtime = $("#weekplan_endtime").val();
     var _data = {

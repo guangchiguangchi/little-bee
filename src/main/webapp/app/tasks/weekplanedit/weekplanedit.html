@@ -1,17 +1,22 @@
 
-<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="myModal" class="modal hide fade hero-unit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
     <form id="weekplanform" class="form-horizontal">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">查询周任务</h3>
+            <h3 id="myModalLabel">查询时间段任务</h3>
         </div>
         <div class="modal-body">
             <div class="control-group">
                 <label class="control-label">任务人:</label>
                 <div class="controls">
-                    <input id="weekplan_id" type="text" class="form-control" name="username"
-                               value=""/>
+                    <select id="username" class="form-control" name="username">
+                        {{each data.users as user i}}
+                        <option value="{{user.username}}">
+                            {{user.username}}
+                        </option>
+                        {{/each}}
+                    </select>
                 </div>
             </div>
             <div class="control-group">

@@ -3,8 +3,8 @@
  */
 $f("df", "tasks.weekplanedit.param", function (_param) {
     switch (_param.action) {
-        case "weekplananalysis":
-            return {url: "/tasks/analysisTask", data:{uid:_param.uid}, target: _param.target};
+        case "username_list":
+            return {url:"/users/list", data:{uid:_param.uid}, target: _param.target};
             break;
     }
 });

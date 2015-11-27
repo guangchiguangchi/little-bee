@@ -284,6 +284,8 @@ public class TasksController extends Controller {
      * workUnfinished 没完成的任务数
      * workTime 周工作时间
      * workUndo 撤销的任务数
+     * work_starttime 开始时间段
+     * work_endtime 结束时间段
      * 返回值：json
      */
     public void addWeekPlan() {
@@ -292,7 +294,8 @@ public class TasksController extends Controller {
         String workUndoStr = getPara("workUndo");
         String workTimeStr = getPara("workTime");
         String workUnfinishedStr = getPara("workUnfinished");
-
+        String work_starttime =getPara("work_starttime");
+        String work_endtime =getPara("work_endtime");
         if(personName==null||personName.trim()==null){
             renderJson(Uitls.Ajax.failure("任务人不能为空！", ""));
             return;
@@ -324,6 +327,8 @@ public class TasksController extends Controller {
         log.set("work_time",workTime);
         log.set("work_undo",workUndo);
         log.set("person_name",personName);
+        log.set("start_time",work_starttime);
+        log.set("end_time",work_endtime);
         log.save();
         renderJson(Uitls.Ajax.success("成功", ""));
     }
@@ -409,12 +414,13 @@ public class TasksController extends Controller {
             }
         }
         WeekPlanModel wpm = new WeekPlanModel();
-        String str= "姓名:" + tasksList.get(0).getStr("person_name") + ",未完成任务：" + wwc + "个,已完成任务：" + wc + "个,共用时：" + time + "小时,撤销任务：" + cx + "个";
         wpm.set("work_completed", wc);
         wpm.set("work_unfinished", wwc);
         wpm.set("work_undo", cx);
         wpm.set("work_time", time);
         wpm.set("person_name", tasksList.get(0).getStr("person_name"));
+        wpm.set("start_time",starttime);
+        wpm.set("end_time",endtime);
         wpm.save();
 
         Map<String,Object> map= new HashMap<String,Object>();
@@ -423,6 +429,8 @@ public class TasksController extends Controller {
         map.put("work_completed",wc);
         map.put("work_time",time);
         map.put("work_undo",cx);
+        map.put("start_time",starttime);
+        map.put("end_time",endtime);
 //        tasksArrJson.add(str);
         objJson.put("weekplan", map);
 
