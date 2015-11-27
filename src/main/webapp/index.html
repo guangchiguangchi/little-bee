@@ -73,6 +73,10 @@
             <%
 
             %>
+            <li><a href="#" onclick="RenderPage('weekPlan','app-context','weekPlan');">周报</a></li>
+            <%
+
+            %>
         </ul>
     </div>
 </div>
@@ -92,7 +96,7 @@
 <script src="/assets/js/bootstrap.min.js"></script>
 <script src="HRFrame/hrframe-2.0.js"></script>
 <script>
-    $f({"path": "app", "frontmode": true});
+    $f({"path": "app", "frontmode": false});
     function RenderPage(_action,_target,uri,canshu,status){
 
         var _data={
