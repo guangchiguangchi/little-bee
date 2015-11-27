@@ -362,27 +362,27 @@ public class TasksController extends Controller {
      * 获取个人本周任务完成状态
      * 接口：/tasks/analysisTask
      * 参数:
-     * 用户ID  id
+     * 用户名  username
      * 开始时间 starttime 格式：yyyy-MM-dd 如（2015-01-01）
      * 结束时间 endtime 格式 yyyy-MM-dd 如（2015-01-01）
      * 返回值：json
      */
 
     public void analysisTask() {
-        String id = getPara("id");
+        String username = getPara("username");
         String starttime = getPara("starttime");
         String endtime = getPara("endtime");
-        if(id==null||id.trim()==null||starttime==null||starttime.trim()==null||endtime==null||endtime.trim()==null){
-            renderJson(Uitls.Ajax.success("id,开始时间和结束时间不能为空！", ""));
+        if(null==username||username.trim()==null||starttime==null||starttime.trim()==null||endtime==null||endtime.trim()==null){
+            renderJson(Uitls.Ajax.failure("用户名,开始时间和结束时间不能为空！", ""));
             return;
         }
         int listSize;
-        List<TasksModel> tasksList = TasksModel.me.find("select bee_tasks.*,bee_users.username as person_name from bee_tasks join bee_users on bee_tasks.assignee_id = bee_users.id where bee_tasks.start_time>=? and bee_tasks.start_time<? and bee_users.id=?", starttime, endtime, id);
+        List<TasksModel> tasksList = TasksModel.me.find("select bee_tasks.*,bee_users.username as person_name from bee_tasks join bee_users on bee_tasks.assignee_id = bee_users.id where bee_tasks.start_time>=? and bee_tasks.start_time<? and bee_users.username=?", starttime, endtime, username);
         listSize = tasksList.size();
         JSONObject objJson = new JSONObject();
 //        JSONArray tasksArrJson = new JSONArray();
         if(listSize==0){
-            renderJson(Uitls.Ajax.success("没有数据！", ""));
+            renderJson(Uitls.Ajax.failure("没有数据！", ""));
             return;
         }
         int wwc = 0, wc = 0, cx = 0;
@@ -435,7 +435,7 @@ public class TasksController extends Controller {
      */
     public void queryWeekPlan(){
         int listSize;
-        List<WeekPlanModel> assigneeList = WeekPlanModel.me.find("select * from bee_weekplan");
+        List<WeekPlanModel> assigneeList = WeekPlanModel.me.find("select * from bee_weekplan order by id desc");
         listSize = assigneeList.size();
 
         JSONObject objJson = new JSONObject();
