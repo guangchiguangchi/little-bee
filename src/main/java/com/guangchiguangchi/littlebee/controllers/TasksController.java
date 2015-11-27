@@ -11,7 +11,9 @@ import org.apache.commons.lang3.StringUtils;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhangchen on 15-11-2.
@@ -286,7 +288,6 @@ public class TasksController extends Controller {
      * 返回值：json
      */
     public void addWeekPlan() {
-        String content = getPara("content");
         String personName = getPara("personName");
         String workCompletedStr = getPara("workCompleted");
         String workUndoStr = getPara("workUndo");
@@ -319,7 +320,6 @@ public class TasksController extends Controller {
         Float workTime = Float.parseFloat(workTimeStr);
         Integer workUndo = Integer.parseInt(workUndoStr);
         WeekPlanModel log = new WeekPlanModel();
-        log.set("content",content);
         log.set("work_completed",workCompleted);
         log.set("work_unfinished",workUnfinished);
         log.set("work_time",workTime);
@@ -360,7 +360,7 @@ public class TasksController extends Controller {
     }
 
     /**
-     * 获取个人任务完成状态
+     * 获取个人本周任务完成状态
      * 接口：/tasks/analysisTask
      * 参数:
      * 用户ID  id
@@ -381,7 +381,7 @@ public class TasksController extends Controller {
         List<TasksModel> tasksList = TasksModel.me.find("select bee_tasks.*,bee_users.username as person_name from bee_tasks join bee_users on bee_tasks.assignee_id = bee_users.id where bee_tasks.start_time>=? and bee_tasks.start_time<? and bee_users.id=?", starttime, endtime, id);
         listSize = tasksList.size();
         JSONObject objJson = new JSONObject();
-        JSONArray tasksArrJson = new JSONArray();
+//        JSONArray tasksArrJson = new JSONArray();
         if(listSize==0){
             renderJson(Uitls.Ajax.success("没有数据！", ""));
             return;
@@ -411,15 +411,21 @@ public class TasksController extends Controller {
         }
         WeekPlanModel wpm = new WeekPlanModel();
         String str= "姓名:" + tasksList.get(0).getStr("person_name") + ",未完成任务：" + wwc + "个,已完成任务：" + wc + "个,共用时：" + time + "小时,撤销任务：" + cx + "个";
-        wpm.set("content",str);
         wpm.set("work_completed", wc);
         wpm.set("work_unfinished", wwc);
         wpm.set("work_undo", cx);
         wpm.set("work_time", time);
         wpm.set("person_name", tasksList.get(0).getStr("person_name"));
         wpm.save();
-        tasksArrJson.add(str);
-        objJson.put("weekplan", tasksArrJson);
+
+        Map<String,Object> map= new HashMap<String,Object>();
+        map.put("person_name",tasksList.get(0).getStr("person_name"));
+        map.put("work_unfinished",wwc);
+        map.put("work_completed",wc);
+        map.put("work_time",time);
+        map.put("work_undo",cx);
+//        tasksArrJson.add(str);
+        objJson.put("weekplan", map);
 
         renderJson(Uitls.Ajax.success("成功", objJson));
     }
