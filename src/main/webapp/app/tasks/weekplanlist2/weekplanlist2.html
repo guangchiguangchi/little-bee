@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="span12">
+        <table class="table table-hover table-condensed">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>任务人</th>
+                <th>完成的任务数</th>
+                <th>没完成的任务数</th>
+                <th>周工作时间</th>
+                <th>撤销的任务数</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{each weekplans as task i}}
+            <tr>
+                <td>{{i}}</td>
+                <td>{{task.person_name}}</td>
+                <td>{{task.work_completed}}</td>
+                <td>{{task.work_unfinished}}</td>
+                <td>{{task.work_time}}</td>
+                <td>{{task.work_undo}}</td>
+            </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
